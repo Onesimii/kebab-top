@@ -1,0 +1,6 @@
+{
+  "name": "Flame & Pita",
+  "description": "Authentic Street Grilling. The most succulent kebabs in town, handcrafted with original spices and served with fresh pita.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

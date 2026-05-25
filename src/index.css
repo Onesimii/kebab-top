@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&family=Montserrat:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #1d100a;
+  --color-surface-dim: #1d100a;
+  --color-surface-bright: #46362e;
+  --color-surface-container-lowest: #170b06;
+  --color-surface-container-low: #261812;
+  --color-surface-container: #2b1c16;
+  --color-surface-container-high: #362720;
+  --color-surface-container-highest: #41312a;
+  --color-on-surface: #f8ddd2;
+  --color-on-surface-variant: #e2bfb0;
+  --color-inverse-surface: #f8ddd2;
+  --color-inverse-on-surface: #3d2d26;
+  --color-outline: #a98a7d;
+  --color-outline-variant: #5a4136;
+  --color-surface-tint: #ffb693;
+  --color-primary: #ffb693;
+  --color-on-primary: #561f00;
+  --color-primary-container: #ff6b00;
+  --color-on-primary-container: #572000;
+  --color-inverse-primary: #a04100;
+  --color-secondary: #c8c6c5;
+  --color-on-secondary: #313030;
+  --color-secondary-container: #474746;
+  --color-on-secondary-container: #b7b5b4;
+  --color-tertiary: #d3c5ac;
+  --color-on-tertiary: #382f1e;
+  --color-tertiary-container: #a49881;
+  --color-on-tertiary-container: #39301f;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-background: #1d100a;
+  --color-on-background: #f8ddd2;
+  --color-surface-variant: #41312a;
+
+  --font-sans: "Montserrat", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Epilogue", "Space Grotesk", sans-serif;
+}
+
+/* Custom visual utilities */
+.glow-orange-sm:hover {
+  box-shadow: 0 0 15px rgba(255, 182, 147, 0.4);
+}
+
+.charcoal-grain {
+  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDpXmWPXqbDsQR-_hUFKfudJeCURIEDxZuOepoyq8POpoHl962I3oZJMlr6kSdSEuDrGQQPS_iG77yTbVnj3Sm6ELjFgvwOUJ1m0P6481bm8VQGbGqC3mxbfHsYs-s1ADEwJLgwlSasOAz29KNtnldIICfzZGIt_KqFBccaDqjCbDuYZ3xVqeDVHd_UiskZVSVg_S784LK9t1KFdEK9po8ZWitDZyO5OOIFJAzS1WNAJRG3L5rQOQW_BdUoQI__9RkzlQqxFHBOXqg");
+  background-blend-mode: overlay;
+}
+
+.pita-gradient {
+  background: linear-gradient(135deg, rgba(29, 16, 10, 0.9) 0%, rgba(54, 39, 32, 0.8) 100%);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1d100a;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #5a4136;
+  border-radius: 10px;
+}
+

@@ -43,12 +43,10 @@ export default function Checkout({
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      alert("Пожалуйста, заполните обязательные поля адреса: Город, Улица и Дом.");
       return;
     }
 
     if (cart.length === 0) {
-      alert("Ваша корзина пуста. Добавьте блюда перед оформлением!");
       return;
     }
 
@@ -75,56 +73,75 @@ export default function Checkout({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                  <label htmlFor="city-input" className="text-xs font-bold text-on-surface-variant font-label-lg">
                     Город *
                   </label>
                   <input
+                    id="city-input"
                     type="text"
                     value={deliveryDetails.city}
                     onChange={(e) => onUpdateAddress({ city: e.target.value })}
+                    aria-required="true"
+                    aria-invalid={!!formErrors.city}
                     className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
                       formErrors.city ? "border-red-400" : "border-outline-variant"
                     }`}
                     placeholder="Москва"
                   />
+                  {formErrors.city && (
+                    <span className="text-red-400 text-[10px] font-bold mt-1 block">Обязательное поле</span>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                  <label htmlFor="street-input" className="text-xs font-bold text-on-surface-variant font-label-lg">
                     Улица *
                   </label>
                   <input
+                    id="street-input"
                     type="text"
                     value={deliveryDetails.street}
                     onChange={(e) => onUpdateAddress({ street: e.target.value })}
+                    aria-required="true"
+                    aria-invalid={!!formErrors.street}
                     className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
                       formErrors.street ? "border-red-400" : "border-outline-variant"
                     }`}
                     placeholder="Введите название улицы"
                   />
+                  {formErrors.street && (
+                    <span className="text-red-400 text-[10px] font-bold mt-1 block">Обязательное поле</span>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 md:col-span-2">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                    <label htmlFor="building-input" className="text-xs font-bold text-on-surface-variant font-label-lg">
                       Дом *
                     </label>
                     <input
+                      id="building-input"
                       type="text"
                       value={deliveryDetails.building}
                       onChange={(e) => onUpdateAddress({ building: e.target.value })}
+                      aria-required="true"
+                      aria-invalid={!!formErrors.building}
                       className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
                         formErrors.building ? "border-red-400" : "border-outline-variant"
                       }`}
                       placeholder="12"
                     />
+                    {formErrors.building && (
+                      <span className="text-red-400 text-[10px] font-bold mt-1 block">Обязательное поле</span>
+                    )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                    <label htmlFor="entrance-input" className="text-xs font-bold text-on-surface-variant font-label-lg">
                       Подъезд
                     </label>
                     <input
+                      id="entrance-input"
                       type="text"
                       value={deliveryDetails.entrance}
                       onChange={(e) => onUpdateAddress({ entrance: e.target.value })}
@@ -134,10 +151,11 @@ export default function Checkout({
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                    <label htmlFor="apartment-input" className="text-xs font-bold text-on-surface-variant font-label-lg">
                       Квартира
                     </label>
                     <input
+                      id="apartment-input"
                       type="text"
                       value={deliveryDetails.apartment}
                       onChange={(e) => onUpdateAddress({ apartment: e.target.value })}
@@ -149,10 +167,11 @@ export default function Checkout({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                <label htmlFor="comment-textarea" className="text-xs font-bold text-on-surface-variant font-label-lg">
                   Комментарий курьеру
                 </label>
                 <textarea
+                  id="comment-textarea"
                   value={deliveryDetails.comment}
                   onChange={(e) => onUpdateAddress({ comment: e.target.value })}
                   className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
@@ -306,6 +325,7 @@ export default function Checkout({
                               onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
                               className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all cursor-pointer"
                               id={`qty-dec-${item.id}`}
+                              aria-label="Уменьшить количество"
                             >
                               -
                             </button>
@@ -316,6 +336,7 @@ export default function Checkout({
                               onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                               className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all cursor-pointer"
                               id={`qty-inc-${item.id}`}
+                              aria-label="Увеличить количество"
                             >
                               +
                             </button>
@@ -324,6 +345,7 @@ export default function Checkout({
                             onClick={() => onRemoveItem(item.id)}
                             className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
                             id={`trash-${item.id}`}
+                            aria-label="Удалить товар"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -352,7 +374,8 @@ export default function Checkout({
 
               <button
                 onClick={handleValidateAndSubmit}
-                className="w-full py-4 mt-2 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg"
+                disabled={cart.length === 0}
+                className={`w-full py-4 mt-2 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg disabled:opacity-50 disabled:cursor-not-allowed`}
                 id="btn-place-order"
               >
                 <span>Оформить заказ</span>

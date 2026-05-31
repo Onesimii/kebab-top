@@ -1,0 +1,3 @@
+## 2026-05-31 - Accessibility and Validation Feedback Overhaul
+**Learning:** Browser `alert()` calls for form validation are jarring and inaccessible. Replacing them with inline error messages and `aria-invalid` attributes provides a smoother, more informative experience for all users, including those using screen readers. Properly linking labels to inputs via `id` and `htmlFor` is a fundamental but often overlooked step in ensuring form accessibility and improving click targets.
+**Action:** Always prefer inline validation over `alert()` and ensure every form input has a corresponding label linked by `id`. Add `aria-label` to all icon-only buttons like trash and quantity adjusters.

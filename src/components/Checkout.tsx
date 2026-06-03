@@ -43,12 +43,10 @@ export default function Checkout({
 
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
-      alert("Пожалуйста, заполните обязательные поля адреса: Город, Улица и Дом.");
       return;
     }
 
     if (cart.length === 0) {
-      alert("Ваша корзина пуста. Добавьте блюда перед оформлением!");
       return;
     }
 
@@ -75,56 +73,90 @@ export default function Checkout({
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                  <label htmlFor="city" className="text-xs font-bold text-on-surface-variant font-label-lg">
                     Город *
                   </label>
                   <input
+                    id="city"
                     type="text"
                     value={deliveryDetails.city}
-                    onChange={(e) => onUpdateAddress({ city: e.target.value })}
+                    onChange={(e) => {
+                      onUpdateAddress({ city: e.target.value });
+                      if (e.target.value.trim() && formErrors.city) {
+                        setFormErrors((prev) => ({ ...prev, city: false }));
+                      }
+                    }}
                     className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
-                      formErrors.city ? "border-red-400" : "border-outline-variant"
+                      formErrors.city ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
                     }`}
                     placeholder="Москва"
                   />
+                  {formErrors.city && (
+                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                      * Обязательное поле
+                    </span>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                  <label htmlFor="street" className="text-xs font-bold text-on-surface-variant font-label-lg">
                     Улица *
                   </label>
                   <input
+                    id="street"
                     type="text"
                     value={deliveryDetails.street}
-                    onChange={(e) => onUpdateAddress({ street: e.target.value })}
+                    onChange={(e) => {
+                      onUpdateAddress({ street: e.target.value });
+                      if (e.target.value.trim() && formErrors.street) {
+                        setFormErrors((prev) => ({ ...prev, street: false }));
+                      }
+                    }}
                     className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
-                      formErrors.street ? "border-red-400" : "border-outline-variant"
+                      formErrors.street ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
                     }`}
                     placeholder="Введите название улицы"
                   />
+                  {formErrors.street && (
+                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                      * Обязательное поле
+                    </span>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 md:col-span-2">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                    <label htmlFor="building" className="text-xs font-bold text-on-surface-variant font-label-lg">
                       Дом *
                     </label>
                     <input
+                      id="building"
                       type="text"
                       value={deliveryDetails.building}
-                      onChange={(e) => onUpdateAddress({ building: e.target.value })}
+                      onChange={(e) => {
+                        onUpdateAddress({ building: e.target.value });
+                        if (e.target.value.trim() && formErrors.building) {
+                          setFormErrors((prev) => ({ ...prev, building: false }));
+                        }
+                      }}
                       className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
-                        formErrors.building ? "border-red-400" : "border-outline-variant"
+                        formErrors.building ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
                       }`}
                       placeholder="12"
                     />
+                    {formErrors.building && (
+                      <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                        * Обязательно
+                      </span>
+                    )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                    <label htmlFor="entrance" className="text-xs font-bold text-on-surface-variant font-label-lg">
                       Подъезд
                     </label>
                     <input
+                      id="entrance"
                       type="text"
                       value={deliveryDetails.entrance}
                       onChange={(e) => onUpdateAddress({ entrance: e.target.value })}
@@ -134,10 +166,11 @@ export default function Checkout({
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                    <label htmlFor="apartment" className="text-xs font-bold text-on-surface-variant font-label-lg">
                       Квартира
                     </label>
                     <input
+                      id="apartment"
                       type="text"
                       value={deliveryDetails.apartment}
                       onChange={(e) => onUpdateAddress({ apartment: e.target.value })}
@@ -149,10 +182,11 @@ export default function Checkout({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-on-surface-variant font-label-lg">
+                <label htmlFor="comment" className="text-xs font-bold text-on-surface-variant font-label-lg">
                   Комментарий курьеру
                 </label>
                 <textarea
+                  id="comment"
                   value={deliveryDetails.comment}
                   onChange={(e) => onUpdateAddress({ comment: e.target.value })}
                   className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
@@ -306,6 +340,7 @@ export default function Checkout({
                               onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
                               className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all cursor-pointer"
                               id={`qty-dec-${item.id}`}
+                              aria-label="Уменьшить количество"
                             >
                               -
                             </button>
@@ -316,6 +351,7 @@ export default function Checkout({
                               onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                               className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all cursor-pointer"
                               id={`qty-inc-${item.id}`}
+                              aria-label="Увеличить количество"
                             >
                               +
                             </button>
@@ -324,6 +360,7 @@ export default function Checkout({
                             onClick={() => onRemoveItem(item.id)}
                             className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
                             id={`trash-${item.id}`}
+                            aria-label="Удалить из корзины"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -352,7 +389,12 @@ export default function Checkout({
 
               <button
                 onClick={handleValidateAndSubmit}
-                className="w-full py-4 mt-2 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg"
+                disabled={cart.length === 0}
+                className={`w-full py-4 mt-2 font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg ${
+                  cart.length === 0
+                    ? "bg-surface-container-highest text-on-surface-variant/40 cursor-not-allowed opacity-60"
+                    : "bg-primary text-on-primary hover:glow-orange-sm active:scale-[0.98] cursor-pointer"
+                }`}
                 id="btn-place-order"
               >
                 <span>Оформить заказ</span>

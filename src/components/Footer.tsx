@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
-import { Share2, MapPin, Phone, Clock } from "lucide-react";
+import React, { useState } from "react";
+import { Share2, MapPin, Phone, Clock, Check } from "lucide-react";
 
 export default function Footer() {
+  const [copied, setCopied] = useState(false);
+
   const shareApp = () => {
     if (navigator.share) {
       navigator.share({
@@ -15,8 +17,9 @@ export default function Footer() {
         url: window.location.href,
       }).catch(console.error);
     } else {
-      alert("Ссылка скопирована в буфер обмена!");
       navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -78,11 +81,16 @@ export default function Footer() {
             <div className="flex gap-4">
               <button
                 onClick={shareApp}
-                className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-all cursor-pointer"
+                className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all cursor-pointer ${
+                  copied
+                    ? "border-emerald-500 text-emerald-500"
+                    : "border-outline-variant text-on-surface hover:text-primary hover:border-primary"
+                }`}
                 title="Поделиться"
+                aria-label="Поделиться ссылкой на приложение"
                 id="btn-share"
               >
-                <Share2 className="w-4 h-4" />
+                {copied ? <Check className="w-4 h-4" /> : <Share2 className="w-4 h-4" />}
               </button>
               <a
                 href="https://maps.google.com"
@@ -90,6 +98,7 @@ export default function Footer() {
                 rel="noreferrer"
                 className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-all"
                 title="Открыть на карте"
+                aria-label="Открыть адрес в Google Картах"
               >
                 <MapPin className="w-4 h-4" />
               </a>

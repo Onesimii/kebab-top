@@ -25,8 +25,9 @@ export default function Header({
         {/* Brand Logo with glowing effect */}
         <button
           onClick={() => onNavigate("menu")}
-          className="flex items-center gap-2 group cursor-pointer focus:outline-none"
+          className="flex items-center gap-2 group cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all rounded-lg"
           id="btn-logo"
+          aria-label="На главную"
         >
           <Flame className="w-8 h-8 text-primary group-hover:scale-110 transition-transform" />
           <span className="font-display text-xl md:text-2xl font-extrabold text-primary uppercase tracking-tighter">
@@ -79,8 +80,9 @@ export default function Header({
         <div className="flex items-center gap-4">
           <button
             onClick={onCartClick}
-            className="relative p-2 text-on-surface-variant hover:text-primary transition-all rounded-full hover:bg-surface-container-high cursor-pointer"
+            className="relative p-2 text-on-surface-variant hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all rounded-full hover:bg-surface-container-high cursor-pointer"
             id="btn-cart-icon"
+            aria-label="Корзина"
           >
             <ShoppingCart className="w-6 h-6" />
             {cartCount > 0 && (
@@ -92,7 +94,7 @@ export default function Header({
 
           <button
             onClick={() => onNavigate("checkout")}
-            className="hidden sm:inline-block bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-lg text-sm font-bold hover:glow-orange-sm transition-all active:scale-95 cursor-pointer"
+            className="hidden sm:inline-block bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-lg text-sm font-bold hover:glow-orange-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all active:scale-95 cursor-pointer"
             id="btn-checkout-top"
           >
             Оформить

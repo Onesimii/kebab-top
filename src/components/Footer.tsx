@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
-import { Share2, MapPin, Phone, Clock } from "lucide-react";
+import React, { useState } from "react";
+import { Share2, MapPin, Phone, Clock, Check } from "lucide-react";
 
 export default function Footer() {
+  const [copied, setCopied] = useState(false);
+
   const shareApp = () => {
     if (navigator.share) {
       navigator.share({
@@ -15,8 +17,9 @@ export default function Footer() {
         url: window.location.href,
       }).catch(console.error);
     } else {
-      alert("Ссылка скопирована в буфер обмена!");
       navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
   };
 
@@ -78,18 +81,25 @@ export default function Footer() {
             <div className="flex gap-4">
               <button
                 onClick={shareApp}
-                className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-all cursor-pointer"
+                className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
                 title="Поделиться"
                 id="btn-share"
+                aria-label={copied ? "Ссылка скопирована" : "Поделиться ссылкой"}
+                aria-live="polite"
               >
-                <Share2 className="w-4 h-4" />
+                {copied ? (
+                  <Check className="w-4 h-4 text-emerald-500 animate-in zoom-in duration-200" />
+                ) : (
+                  <Share2 className="w-4 h-4" />
+                )}
               </button>
               <a
                 href="https://maps.google.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-all"
+                className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all"
                 title="Открыть на карте"
+                aria-label="Открыть на карте"
               >
                 <MapPin className="w-4 h-4" />
               </a>

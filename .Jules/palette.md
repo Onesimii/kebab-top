@@ -5,3 +5,7 @@
 ## 2026-06-06 - Dynamic Feedback for State Changes
 **Learning:** For actions like "Copy to Clipboard", visual-only feedback (changing an icon) is insufficient for screen reader users. Combining `aria-live` with a dynamic `aria-label` ensures that the state change is announced immediately and clearly.
 **Action:** When implementing temporary visual feedback for icon-only buttons, always synchronize the `aria-label` and use `aria-live` to announce the change.
+
+## 2026-06-07 - Newsletter Form Validation & Legibility
+**Learning:** Using `text-[10px]` for error messages or legal text often falls below accessibility standards (typically 12px/`text-xs` minimum). Even small micro-interactions must maintain legible font sizes and proper ARIA relationships (`aria-invalid`, `aria-describedby`) to be truly inclusive.
+**Action:** Default to at least `text-xs` (12px) for helper text and error messages, and ensure error states are correctly linked via `aria-describedby` to their respective inputs.

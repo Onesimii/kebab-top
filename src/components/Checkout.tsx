@@ -58,7 +58,7 @@ export default function Checkout({
     <main className="pt-24 pb-20 max-w-7xl mx-auto px-6 md:px-16" id="checkout-screen">
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Left column: Address + Payment Form */}
-        <form onSubmit={handleValidateAndSubmit} className="flex-1 space-y-8">
+        <form onSubmit={handleValidateAndSubmit} className="flex-1 space-y-8" noValidate>
           <div>
             <h1 className="font-display text-3xl md:text-4xl font-extrabold mb-6 text-primary">
               Оформление заказа
@@ -80,6 +80,8 @@ export default function Checkout({
                     id="city"
                     type="text"
                     value={deliveryDetails.city}
+                    aria-invalid={formErrors.city}
+                    aria-describedby={formErrors.city ? "city-error" : undefined}
                     onChange={(e) => {
                       onUpdateAddress({ city: e.target.value });
                       if (e.target.value.trim() && formErrors.city) {
@@ -92,7 +94,7 @@ export default function Checkout({
                     placeholder="Москва"
                   />
                   {formErrors.city && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span id="city-error" className="text-xs text-red-400 font-bold ml-1 animate-fade-in">
                       * Обязательное поле
                     </span>
                   )}
@@ -106,6 +108,8 @@ export default function Checkout({
                     id="street"
                     type="text"
                     value={deliveryDetails.street}
+                    aria-invalid={formErrors.street}
+                    aria-describedby={formErrors.street ? "street-error" : undefined}
                     onChange={(e) => {
                       onUpdateAddress({ street: e.target.value });
                       if (e.target.value.trim() && formErrors.street) {
@@ -118,7 +122,7 @@ export default function Checkout({
                     placeholder="Введите название улицы"
                   />
                   {formErrors.street && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span id="street-error" className="text-xs text-red-400 font-bold ml-1 animate-fade-in">
                       * Обязательное поле
                     </span>
                   )}
@@ -133,6 +137,8 @@ export default function Checkout({
                       id="building"
                       type="text"
                       value={deliveryDetails.building}
+                      aria-invalid={formErrors.building}
+                      aria-describedby={formErrors.building ? "building-error" : undefined}
                       onChange={(e) => {
                         onUpdateAddress({ building: e.target.value });
                         if (e.target.value.trim() && formErrors.building) {
@@ -145,7 +151,7 @@ export default function Checkout({
                       placeholder="12"
                     />
                     {formErrors.building && (
-                      <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                      <span id="building-error" className="text-xs text-red-400 font-bold ml-1 animate-fade-in">
                         * Обязательно
                       </span>
                     )}
@@ -204,11 +210,20 @@ export default function Checkout({
               <h2 className="font-display text-xl font-bold text-white">Способ оплаты</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4" role="radiogroup" aria-label="Способ оплаты">
               {/* Card option toggler */}
-              <label
+              <div
+                role="radio"
+                aria-checked={paymentMethod === PaymentMethod.CARD}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onUpdatePayment(PaymentMethod.CARD);
+                  }
+                }}
                 onClick={() => onUpdatePayment(PaymentMethod.CARD)}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none ${
+                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
                   paymentMethod === PaymentMethod.CARD
                     ? "bg-surface-container-lowest border-primary"
                     : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
@@ -229,16 +244,25 @@ export default function Checkout({
                   </div>
                 </div>
                 {paymentMethod === PaymentMethod.CARD && (
-                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
+                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-xs">
                     ✓
                   </span>
                 )}
-              </label>
+              </div>
 
               {/* Cash option toggler */}
-              <label
+              <div
+                role="radio"
+                aria-checked={paymentMethod === PaymentMethod.CASH}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onUpdatePayment(PaymentMethod.CASH);
+                  }
+                }}
                 onClick={() => onUpdatePayment(PaymentMethod.CASH)}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none ${
+                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
                   paymentMethod === PaymentMethod.CASH
                     ? "bg-surface-container-lowest border-primary"
                     : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
@@ -259,11 +283,11 @@ export default function Checkout({
                   </div>
                 </div>
                 {paymentMethod === PaymentMethod.CASH && (
-                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
+                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-xs">
                     ✓
                   </span>
                 )}
-              </label>
+              </div>
             </div>
           </div>
         </form>
@@ -317,7 +341,7 @@ export default function Checkout({
                               {item.name}
                             </span>
                             {hasAdditions && (
-                              <p className="text-[10px] text-primary font-semibold mt-0.5">
+                              <p className="text-xs text-primary font-semibold mt-0.5">
                                 [
                                 {item.options.extraSauceCount > 0 &&
                                   `соус x${item.options.extraSauceCount}`}
@@ -401,7 +425,7 @@ export default function Checkout({
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <p className="text-[10px] text-center text-on-surface-variant/50 leading-relaxed font-medium">
+              <p className="text-xs text-center text-on-surface-variant/50 leading-relaxed font-medium">
                 Нажимая кнопку, вы соглашаетесь с условиями{" "}
                 <a href="#offer" className="underline hover:text-primary transition-colors">
                   оферты

@@ -5,3 +5,7 @@
 ## 2026-06-06 - Dynamic Feedback for State Changes
 **Learning:** For actions like "Copy to Clipboard", visual-only feedback (changing an icon) is insufficient for screen reader users. Combining `aria-live` with a dynamic `aria-label` ensures that the state change is announced immediately and clearly.
 **Action:** When implementing temporary visual feedback for icon-only buttons, always synchronize the `aria-label` and use `aria-live` to announce the change.
+
+## 2026-06-11 - Accessible Inline Form Validation
+**Learning:** For inline validation, using `aria-invalid` on the input and linking it to the error message via `aria-describedby` (on an element with `role="alert"`) provides the most robust experience for screen reader users, ensuring they are notified of the error and its content.
+**Action:** Always pair `aria-invalid` with `aria-describedby` and `role="alert"` when implementing custom inline validation messages.

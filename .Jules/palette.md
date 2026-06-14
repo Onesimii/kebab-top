@@ -5,3 +5,7 @@
 ## 2026-06-06 - Dynamic Feedback for State Changes
 **Learning:** For actions like "Copy to Clipboard", visual-only feedback (changing an icon) is insufficient for screen reader users. Combining `aria-live` with a dynamic `aria-label` ensures that the state change is announced immediately and clearly.
 **Action:** When implementing temporary visual feedback for icon-only buttons, always synchronize the `aria-label` and use `aria-live` to announce the change.
+
+## 2025-05-15 - Standardizing Form Validation UX
+**Learning:** Consistently applying the "inline error + clear-on-input" pattern across different contexts (Checkout vs. Newsletter) builds user trust. Using `noValidate` on the form is critical when implementing custom UX to prevent browser-native tooltips from creating a disjointed experience (e.g., two different error UI styles appearing simultaneously).
+**Action:** Always pair custom inline validation with `noValidate` on the parent `<form>` and ensure `role="alert"` is used for immediate accessibility.

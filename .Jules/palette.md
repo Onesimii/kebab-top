@@ -5,3 +5,7 @@
 ## 2026-06-06 - Dynamic Feedback for State Changes
 **Learning:** For actions like "Copy to Clipboard", visual-only feedback (changing an icon) is insufficient for screen reader users. Combining `aria-live` with a dynamic `aria-label` ensures that the state change is announced immediately and clearly.
 **Action:** When implementing temporary visual feedback for icon-only buttons, always synchronize the `aria-label` and use `aria-live` to announce the change.
+
+## 2026-06-10 - Micro-UX and Accessibility Polish
+**Learning:** Combining multiple small accessibility wins (ARIA labels for icon buttons, proper form labeling, and state-driven validation) creates a much more cohesive and professional feel than a single isolated fix. Replacing browser native validation with custom UI and `noValidate` provides full control over the user journey and error presentation.
+**Action:** When auditing a component, look for all related accessibility and UX gaps (labels, ARIA, validation states) and address them as a unit to provide a complete "polish" pass.

@@ -9,14 +9,16 @@ import { Mail, CheckCircle } from "lucide-react";
 export default function Newsletter() {
   const [email, setEmail] = useState<string>("");
   const [subscribed, setSubscribed] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) {
-      alert("Пожалуйста, введите корректный адрес электронной почты!");
+      setError("Пожалуйста, введите корректный адрес электронной почты!");
       return;
     }
     setSubscribed(true);
+    setError(null);
     setEmail("");
   };
 
@@ -55,22 +57,38 @@ export default function Newsletter() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col gap-5" id="subscribe-form">
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-5" id="subscribe-form" noValidate>
               <div className="flex flex-col gap-1.5">
-                <label className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider">
+                <label
+                  htmlFor="newsletter-email"
+                  className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider"
+                >
                   Ваш Email
                 </label>
                 <div className="relative">
                   <input
+                    id="newsletter-email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (error) setError(null);
+                    }}
+                    aria-invalid={!!error}
+                    aria-describedby={error ? "newsletter-error" : undefined}
+                    className={`w-full bg-surface-container-lowest border ${
+                      error ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary"
+                    } rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium`}
                     placeholder="kebab-lover@mail.com"
                     type="email"
                     required
                   />
                   <Mail className="absolute left-4 top-3.5 w-5 h-5 text-on-surface-variant/55" />
                 </div>
+                {error && (
+                  <p id="newsletter-error" role="alert" className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    * {error}
+                  </p>
+                )}
               </div>
               <button
                 type="submit"

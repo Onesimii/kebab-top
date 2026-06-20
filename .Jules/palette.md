@@ -5,3 +5,7 @@
 ## 2026-06-06 - Dynamic Feedback for State Changes
 **Learning:** For actions like "Copy to Clipboard", visual-only feedback (changing an icon) is insufficient for screen reader users. Combining `aria-live` with a dynamic `aria-label` ensures that the state change is announced immediately and clearly.
 **Action:** When implementing temporary visual feedback for icon-only buttons, always synchronize the `aria-label` and use `aria-live` to announce the change.
+
+## 2025-05-14 - Robust Custom Form Validation
+**Learning:** When replacing native browser validation with custom state-driven UX, using `noValidate` on the form is essential to prevent conflicting UI. To maintain accessibility, `aria-invalid` must be paired with `aria-describedby` pointing to a `role="alert"` element to ensure screen readers immediately announce the specific error.
+**Action:** Always use `noValidate` for custom validation and implement the `aria-invalid`/`aria-describedby`/`role="alert"` trio for accessible error reporting.

@@ -53,6 +53,7 @@ export default function CartDrawer({
             onClick={onClose}
             className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high cursor-pointer transition-all"
             id="cart-drawer-close"
+            aria-label="Закрыть корзину"
           >
             <X className="w-5 h-5" />
           </button>
@@ -117,6 +118,7 @@ export default function CartDrawer({
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
                           className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                          aria-label="Уменьшить количество"
                         >
                           -
                         </button>
@@ -126,6 +128,7 @@ export default function CartDrawer({
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
                           className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                          aria-label="Увеличить количество"
                         >
                           +
                         </button>
@@ -133,6 +136,7 @@ export default function CartDrawer({
                       <button
                         onClick={() => onRemoveItem(item.id)}
                         className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                        aria-label="Удалить из корзины"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

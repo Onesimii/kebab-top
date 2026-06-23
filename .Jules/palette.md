@@ -5,3 +5,7 @@
 ## 2026-06-06 - Dynamic Feedback for State Changes
 **Learning:** For actions like "Copy to Clipboard", visual-only feedback (changing an icon) is insufficient for screen reader users. Combining `aria-live` with a dynamic `aria-label` ensures that the state change is announced immediately and clearly.
 **Action:** When implementing temporary visual feedback for icon-only buttons, always synchronize the `aria-label` and use `aria-live` to announce the change.
+
+## 2026-06-07 - Asynchronous Form Feedback
+**Learning:** Providing immediate visual feedback during form submission (e.g., loading spinners and disabled buttons) prevents duplicate submissions and reduces user anxiety during network delays.
+**Action:** Always implement a loading state for form submissions, using a spinner icon and disabling the submit button until the operation completes or fails.

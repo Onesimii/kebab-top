@@ -201,14 +201,29 @@ export default function Checkout({
           <div className="bg-surface-container p-6 md:p-8 rounded-2xl space-y-6 shadow-sm border border-outline-variant/30">
             <div className="flex items-center gap-3 border-b border-outline-variant/15 pb-4">
               <CreditCard className="w-5 h-5 text-primary" />
-              <h2 className="font-display text-xl font-bold text-white">Способ оплаты</h2>
+              <h2 id="payment-method-heading" className="font-display text-xl font-bold text-white">
+                Способ оплаты
+              </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div
+              role="radiogroup"
+              aria-labelledby="payment-method-heading"
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+            >
               {/* Card option toggler */}
-              <label
+              <div
+                role="radio"
+                aria-checked={paymentMethod === PaymentMethod.CARD}
+                tabIndex={0}
                 onClick={() => onUpdatePayment(PaymentMethod.CARD)}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onUpdatePayment(PaymentMethod.CARD);
+                  }
+                }}
+                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                   paymentMethod === PaymentMethod.CARD
                     ? "bg-surface-container-lowest border-primary"
                     : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
@@ -218,7 +233,9 @@ export default function Checkout({
                 <div className="flex items-center gap-3">
                   <CreditCard
                     className={`w-5 h-5 ${
-                      paymentMethod === PaymentMethod.CARD ? "text-primary" : "text-on-surface-variant"
+                      paymentMethod === PaymentMethod.CARD
+                        ? "text-primary"
+                        : "text-on-surface-variant"
                     }`}
                   />
                   <div className="flex flex-col">
@@ -233,12 +250,21 @@ export default function Checkout({
                     ✓
                   </span>
                 )}
-              </label>
+              </div>
 
               {/* Cash option toggler */}
-              <label
+              <div
+                role="radio"
+                aria-checked={paymentMethod === PaymentMethod.CASH}
+                tabIndex={0}
                 onClick={() => onUpdatePayment(PaymentMethod.CASH)}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onUpdatePayment(PaymentMethod.CASH);
+                  }
+                }}
+                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                   paymentMethod === PaymentMethod.CASH
                     ? "bg-surface-container-lowest border-primary"
                     : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
@@ -248,7 +274,9 @@ export default function Checkout({
                 <div className="flex items-center gap-3">
                   <Truck
                     className={`w-5 h-5 ${
-                      paymentMethod === PaymentMethod.CASH ? "text-primary" : "text-on-surface-variant"
+                      paymentMethod === PaymentMethod.CASH
+                        ? "text-primary"
+                        : "text-on-surface-variant"
                     }`}
                   />
                   <div className="flex flex-col">
@@ -263,7 +291,7 @@ export default function Checkout({
                     ✓
                   </span>
                 )}
-              </label>
+              </div>
             </div>
           </div>
         </form>

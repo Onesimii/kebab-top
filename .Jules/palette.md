@@ -9,3 +9,7 @@
 ## 2026-06-25 - Accessible Custom Selection UI
 **Learning:** Custom 'card' or 'tile' selection interfaces (like payment methods or plan choices) are often implemented using labels or divs that are not natively accessible to keyboard or screen reader users. Transforming them into a `radiogroup` and `radio` pattern with `tabIndex={0}` and `onKeyDown` handlers for 'Enter'/'Space' provides a familiar and robust UX for all users.
 **Action:** Identify any custom card-based selections and apply the ARIA radio pattern to ensure full keyboard and assistive technology compatibility.
+
+## 2026-07-15 - Legibility and Standardized Typography
+**Learning:** Using sub-12px font sizes (like 10px or 11px) significantly hinders legibility for many users. Standardizing the minimum functional text size to 12px (text-xs) across the entire application ensures a baseline level of accessibility and visual consistency without compromising the design intent.
+**Action:** Identify and replace all custom sub-12px font size utilities with the standard 'text-xs' class to maintain accessibility compliance and improved readability.

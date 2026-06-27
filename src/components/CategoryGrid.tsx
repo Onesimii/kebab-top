@@ -214,7 +214,7 @@ export default function CategoryGrid({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {item.price > 450 && (
-                    <span className="absolute top-3 left-3 bg-primary-container text-on-primary-container text-[11px] uppercase tracking-wider font-bold px-2 px-y rounded-md font-label-lg">
+                    <span className="absolute top-3 left-3 bg-primary-container text-on-primary-container text-xs uppercase tracking-wider font-bold px-2 px-y rounded-md font-label-lg">
                       Шеф-Выбор
                     </span>
                   )}

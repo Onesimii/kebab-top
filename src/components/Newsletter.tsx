@@ -79,7 +79,7 @@ export default function Newsletter() {
               >
                 Подписаться
               </button>
-              <p className="text-[10px] text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
+              <p className="text-xs text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
                 Нажимая кнопку, вы безоговорочно соглашаетесь со всеми условиями обработки персональных данных и нашей политикой конфиденциальности.
               </p>
             </form>

@@ -73,7 +73,7 @@ export default function OrderSuccessModal({
             <CheckCircle className="w-8 h-8 text-emerald-400" />
           </div>
           <div>
-            <span className="text-[10px] text-primary uppercase tracking-[0.25em] font-extrabold">
+            <span className="text-xs text-primary uppercase tracking-[0.25em] font-extrabold">
               Заказ №{simulatedOrderId} Успешно Оформлен!
             </span>
             <h2 className="font-display font-black text-2xl md:text-3xl text-white mt-1">
@@ -140,7 +140,7 @@ export default function OrderSuccessModal({
                 <Clock className="w-6 h-6 text-primary animate-spin" style={{ animationDuration: "12s" }} />
               </div>
               <div>
-                <span className="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">
+                <span className="text-xs text-on-surface-variant font-bold uppercase tracking-wider">
                   Ориентировочное время доставки
                 </span>
                 <div className="text-2xl font-black text-white mt-1 font-mono">
@@ -151,7 +151,7 @@ export default function OrderSuccessModal({
 
             {/* Address Summary */}
             <div className="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/15 space-y-3 text-xs leading-normal">
-              <h4 className="font-label-lg font-bold text-primary uppercase text-[10px] tracking-wider mb-2">
+              <h4 className="font-label-lg font-bold text-primary uppercase text-xs tracking-wider mb-2">
                 Адрес Доставки
               </h4>
               <div className="flex items-start gap-2">
@@ -171,7 +171,7 @@ export default function OrderSuccessModal({
 
             {/* Order total list summary */}
             <div className="bg-surface-container-low p-5 rounded-2xl border border-outline-variant/15 space-y-3 text-xs">
-              <h4 className="font-label-lg font-bold text-primary uppercase text-[10px] tracking-wider border-b border-outline-variant/10 pb-2">
+              <h4 className="font-label-lg font-bold text-primary uppercase text-xs tracking-wider border-b border-outline-variant/10 pb-2">
                 Сводка заказа
               </h4>
               <div className="space-y-2 max-h-[100px] overflow-y-auto custom-scrollbar">

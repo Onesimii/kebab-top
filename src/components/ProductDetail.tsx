@@ -132,6 +132,7 @@ export default function ProductDetail({
                     onClick={handleDecrementSauce}
                     className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
                     id="sauce-decrement"
+                    aria-label="Уменьшить количество соуса"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
@@ -142,6 +143,7 @@ export default function ProductDetail({
                     onClick={handleIncrementSauce}
                     className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
                     id="sauce-increment"
+                    aria-label="Увеличить количество соуса"
                   >
                     <Plus className="w-4 h-4" />
                   </button>

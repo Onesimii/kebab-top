@@ -4,18 +4,28 @@
  */
 
 import React, { useState } from "react";
-import { Mail, CheckCircle } from "lucide-react";
+import { Mail, CheckCircle, Loader2 } from "lucide-react";
 
 export default function Newsletter() {
   const [email, setEmail] = useState<string>("");
   const [subscribed, setSubscribed] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
     if (!email.trim() || !email.includes("@")) {
-      alert("Пожалуйста, введите корректный адрес электронной почты!");
+      setError("Пожалуйста, введите корректный адрес электронной почты!");
       return;
     }
+
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsSubmitting(false);
+
     setSubscribed(true);
     setEmail("");
   };
@@ -55,31 +65,71 @@ export default function Newsletter() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col gap-5" id="subscribe-form">
+            <form
+              onSubmit={handleSubscribe}
+              className="flex flex-col gap-5"
+              id="subscribe-form"
+              noValidate
+            >
               <div className="flex flex-col gap-1.5">
-                <label className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider">
+                <label
+                  htmlFor="newsletter-email"
+                  className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider"
+                >
                   Ваш Email
                 </label>
                 <div className="relative">
                   <input
+                    id="newsletter-email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (error) setError(null);
+                    }}
+                    className={`w-full bg-surface-container-lowest border rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium ${
+                      error
+                        ? "border-red-400 focus:ring-1 focus:ring-red-400 focus:border-red-400"
+                        : "border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary"
+                    }`}
                     placeholder="kebab-lover@mail.com"
                     type="email"
                     required
+                    disabled={isSubmitting}
+                    aria-invalid={error ? "true" : "false"}
+                    aria-describedby={error ? "newsletter-error" : undefined}
                   />
                   <Mail className="absolute left-4 top-3.5 w-5 h-5 text-on-surface-variant/55" />
                 </div>
+                {error && (
+                  <span
+                    id="newsletter-error"
+                    role="alert"
+                    className="text-xs text-red-400 font-bold ml-1 animate-fade-in"
+                  >
+                    {error}
+                  </span>
+                )}
               </div>
               <button
                 type="submit"
-                className="w-full bg-primary text-on-primary py-4 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-[0.98] cursor-pointer shadow-lg"
+                disabled={isSubmitting}
+                className={`w-full py-4 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase transition-all shadow-lg flex items-center justify-center gap-2 ${
+                  isSubmitting
+                    ? "bg-surface-container-highest text-on-surface-variant/40 cursor-not-allowed"
+                    : "bg-primary text-on-primary hover:glow-orange-sm active:scale-[0.98] cursor-pointer"
+                }`}
                 id="btn-subscribe"
               >
-                Подписаться
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Подключение...</span>
+                  </>
+                ) : (
+                  "Подписаться"
+                )}
               </button>
-              <p className="text-[10px] text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
+              <p className="text-xs text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
                 Нажимая кнопку, вы безоговорочно соглашаетесь со всеми условиями обработки персональных данных и нашей политикой конфиденциальности.
               </p>
             </form>

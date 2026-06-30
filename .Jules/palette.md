@@ -9,3 +9,7 @@
 ## 2026-06-25 - Accessible Custom Selection UI
 **Learning:** Custom 'card' or 'tile' selection interfaces (like payment methods or plan choices) are often implemented using labels or divs that are not natively accessible to keyboard or screen reader users. Transforming them into a `radiogroup` and `radio` pattern with `tabIndex={0}` and `onKeyDown` handlers for 'Enter'/'Space' provides a familiar and robust UX for all users.
 **Action:** Identify any custom card-based selections and apply the ARIA radio pattern to ensure full keyboard and assistive technology compatibility.
+
+## 2025-05-15 - Robust Form UX & Accessibility
+**Learning:** Combining state-driven inline validation with `noValidate` on forms prevents inconsistent browser behaviors. Adding a loading state (`isSubmitting`) with a spinner provides essential feedback for async-like actions, and using `aria-describedby` ensures that error messages are immediately discoverable by screen readers.
+**Action:** Always use `noValidate` when implementing custom validation, and pair error states with descriptive ARIA attributes and loading indicators for a professional feel.

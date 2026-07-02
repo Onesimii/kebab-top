@@ -38,7 +38,7 @@ export default function Footer() {
             <p className="text-on-surface-variant text-sm max-w-xs leading-relaxed">
               Аутентичный вкус уличного гриля. Свежевыпеченная пита, сочное мясо на углях и секретные специи.
             </p>
-            <span className="text-on-surface-variant/60 font-mono text-[11px] mt-2">
+            <span className="text-on-surface-variant/60 font-mono text-xs mt-2">
               © {new Date().getFullYear()} Flame &amp; Pita. All Rights Reserved.
             </span>
           </div>

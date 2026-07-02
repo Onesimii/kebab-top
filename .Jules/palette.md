@@ -9,3 +9,7 @@
 ## 2026-06-25 - Accessible Custom Selection UI
 **Learning:** Custom 'card' or 'tile' selection interfaces (like payment methods or plan choices) are often implemented using labels or divs that are not natively accessible to keyboard or screen reader users. Transforming them into a `radiogroup` and `radio` pattern with `tabIndex={0}` and `onKeyDown` handlers for 'Enter'/'Space' provides a familiar and robust UX for all users.
 **Action:** Identify any custom card-based selections and apply the ARIA radio pattern to ensure full keyboard and assistive technology compatibility.
+
+## 2026-07-10 - Standardizing Minimum Font Sizes
+**Learning:** This application consistently used sub-12px font sizes (10px and 11px) for badges, helper text, and nutrition labels, which hinders readability. Standardizing to a minimum of 'text-xs' (12px) across the entire codebase provides a significant accessibility boost with minimal impact on the visual hierarchy.
+**Action:** Always scan for and remediate 'text-[10px]' and 'text-[11px]' usages by standardizing them to 'text-xs' to ensure WCAG-compliant legibility.

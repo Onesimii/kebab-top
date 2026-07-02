@@ -92,7 +92,7 @@ export default function Checkout({
                     placeholder="Москва"
                   />
                   {formErrors.city && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span className="text-xs text-red-400 font-bold ml-1 animate-fade-in">
                       * Обязательное поле
                     </span>
                   )}
@@ -118,7 +118,7 @@ export default function Checkout({
                     placeholder="Введите название улицы"
                   />
                   {formErrors.street && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span className="text-xs text-red-400 font-bold ml-1 animate-fade-in">
                       * Обязательное поле
                     </span>
                   )}
@@ -145,7 +145,7 @@ export default function Checkout({
                       placeholder="12"
                     />
                     {formErrors.building && (
-                      <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                      <span className="text-xs text-red-400 font-bold ml-1 animate-fade-in">
                         * Обязательно
                       </span>
                     )}
@@ -246,7 +246,7 @@ export default function Checkout({
                   </div>
                 </div>
                 {paymentMethod === PaymentMethod.CARD && (
-                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
+                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-xs">
                     ✓
                   </span>
                 )}
@@ -287,7 +287,7 @@ export default function Checkout({
                   </div>
                 </div>
                 {paymentMethod === PaymentMethod.CASH && (
-                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
+                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-xs">
                     ✓
                   </span>
                 )}
@@ -345,7 +345,7 @@ export default function Checkout({
                               {item.name}
                             </span>
                             {hasAdditions && (
-                              <p className="text-[10px] text-primary font-semibold mt-0.5">
+                              <p className="text-xs text-primary font-semibold mt-0.5">
                                 [
                                 {item.options.extraSauceCount > 0 &&
                                   `соус x${item.options.extraSauceCount}`}
@@ -429,7 +429,7 @@ export default function Checkout({
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <p className="text-[10px] text-center text-on-surface-variant/50 leading-relaxed font-medium">
+              <p className="text-xs text-center text-on-surface-variant/50 leading-relaxed font-medium">
                 Нажимая кнопку, вы соглашаетесь с условиями{" "}
                 <a href="#offer" className="underline hover:text-primary transition-colors">
                   оферты

@@ -9,15 +9,22 @@ import { Mail, CheckCircle } from "lucide-react";
 export default function Newsletter() {
   const [email, setEmail] = useState<string>("");
   const [subscribed, setSubscribed] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) {
-      alert("Пожалуйста, введите корректный адрес электронной почты!");
+      setError("Пожалуйста, введите корректный адрес электронной почты!");
       return;
     }
     setSubscribed(true);
     setEmail("");
+    setError("");
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (error) setError("");
   };
 
   return (
@@ -39,7 +46,11 @@ export default function Newsletter() {
         {/* Dynamic Subscribe Form Card */}
         <div className="bg-surface-container-high p-8 rounded-2xl shadow-xl border border-outline-variant/20 relative overflow-hidden">
           {subscribed ? (
-            <div className="py-10 text-center space-y-4 animate-fade-in" id="subscribe-success">
+            <div
+              className="py-10 text-center space-y-4 animate-fade-in"
+              id="subscribe-success"
+              aria-live="polite"
+            >
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/30">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
@@ -55,22 +66,46 @@ export default function Newsletter() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col gap-5" id="subscribe-form">
+            <form
+              onSubmit={handleSubscribe}
+              className="flex flex-col gap-5"
+              id="subscribe-form"
+              noValidate
+            >
               <div className="flex flex-col gap-1.5">
-                <label className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider">
+                <label
+                  htmlFor="newsletter-email"
+                  className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider"
+                >
                   Ваш Email
                 </label>
                 <div className="relative">
                   <input
+                    id="newsletter-email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium"
+                    onChange={handleEmailChange}
+                    className={`w-full bg-surface-container-lowest border rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium focus:ring-1 ${
+                      error
+                        ? "border-red-400 focus:border-red-400 focus:ring-red-400"
+                        : "border-outline-variant focus:border-primary focus:ring-primary"
+                    }`}
                     placeholder="kebab-lover@mail.com"
                     type="email"
                     required
+                    aria-invalid={!!error}
+                    aria-describedby={error ? "newsletter-error" : undefined}
                   />
                   <Mail className="absolute left-4 top-3.5 w-5 h-5 text-on-surface-variant/55" />
                 </div>
+                {error && (
+                  <p
+                    id="newsletter-error"
+                    role="alert"
+                    className="text-xs text-red-400 font-bold ml-1 animate-fade-in"
+                  >
+                    {error}
+                  </p>
+                )}
               </div>
               <button
                 type="submit"
@@ -79,7 +114,7 @@ export default function Newsletter() {
               >
                 Подписаться
               </button>
-              <p className="text-[10px] text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
+              <p className="text-xs text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
                 Нажимая кнопку, вы безоговорочно соглашаетесь со всеми условиями обработки персональных данных и нашей политикой конфиденциальности.
               </p>
             </form>

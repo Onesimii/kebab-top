@@ -9,3 +9,7 @@
 ## 2026-06-25 - Accessible Custom Selection UI
 **Learning:** Custom 'card' or 'tile' selection interfaces (like payment methods or plan choices) are often implemented using labels or divs that are not natively accessible to keyboard or screen reader users. Transforming them into a `radiogroup` and `radio` pattern with `tabIndex={0}` and `onKeyDown` handlers for 'Enter'/'Space' provides a familiar and robust UX for all users.
 **Action:** Identify any custom card-based selections and apply the ARIA radio pattern to ensure full keyboard and assistive technology compatibility.
+
+## 2026-07-07 - Navigational Grid Accessibility
+**Learning:** Category navigation grids using non-semantic elements (like divs) for cards are common accessibility barriers. Adding `role="button"`, `tabIndex={0}`, and `onKeyDown` handlers for 'Enter'/'Space' transforms them into accessible navigation controls while maintaining the intended visual design.
+**Action:** Ensure all tile-based or card-based navigation components are keyboard-accessible with appropriate ARIA roles and focus-visible indicators.

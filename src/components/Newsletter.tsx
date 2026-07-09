@@ -4,20 +4,35 @@
  */
 
 import React, { useState } from "react";
-import { Mail, CheckCircle } from "lucide-react";
+import { Mail, CheckCircle, Loader2 } from "lucide-react";
 
 export default function Newsletter() {
   const [email, setEmail] = useState<string>("");
   const [subscribed, setSubscribed] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes("@")) {
-      alert("Пожалуйста, введите корректный адрес электронной почты!");
+      setError("Пожалуйста, введите корректный адрес электронной почты!");
       return;
     }
-    setSubscribed(true);
-    setEmail("");
+
+    setIsLoading(true);
+    setError("");
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      setSubscribed(true);
+      setEmail("");
+    }, 1500);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (error) setError("");
   };
 
   return (
@@ -37,9 +52,9 @@ export default function Newsletter() {
         </div>
 
         {/* Dynamic Subscribe Form Card */}
-        <div className="bg-surface-container-high p-8 rounded-2xl shadow-xl border border-outline-variant/20 relative overflow-hidden">
+        <div className="bg-surface-container-high p-8 rounded-2xl shadow-xl border border-outline-variant/20 relative overflow-hidden min-h-[340px] flex flex-col justify-center">
           {subscribed ? (
-            <div className="py-10 text-center space-y-4 animate-fade-in" id="subscribe-success">
+            <div className="py-10 text-center space-y-4 animate-fade-in" id="subscribe-success" role="status">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto border border-primary/30">
                 <CheckCircle className="w-8 h-8 text-primary" />
               </div>
@@ -55,31 +70,57 @@ export default function Newsletter() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubscribe} className="flex flex-col gap-5" id="subscribe-form">
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-5" id="subscribe-form" noValidate>
               <div className="flex flex-col gap-1.5">
-                <label className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider">
+                <label
+                  htmlFor="newsletter-email"
+                  className="font-label-lg text-xs font-bold text-on-surface-variant ml-1 uppercase tracking-wider"
+                >
                   Ваш Email
                 </label>
                 <div className="relative">
                   <input
+                    id="newsletter-email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium"
+                    onChange={handleEmailChange}
+                    className={`w-full bg-surface-container-lowest border rounded-xl pl-11 pr-4 py-3.5 text-on-surface text-sm outline-none transition-all placeholder:text-on-surface-variant/30 font-medium ${
+                      error ? "border-red-500 focus:ring-1 focus:ring-red-500" : "border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary"
+                    }`}
                     placeholder="kebab-lover@mail.com"
                     type="email"
+                    aria-invalid={!!error}
+                    aria-describedby={error ? "newsletter-error" : undefined}
+                    disabled={isLoading}
                     required
                   />
                   <Mail className="absolute left-4 top-3.5 w-5 h-5 text-on-surface-variant/55" />
                 </div>
+                {error && (
+                  <p id="newsletter-error" className="text-xs text-red-400 font-bold ml-1 animate-fade-in" role="alert">
+                    {error}
+                  </p>
+                )}
               </div>
               <button
                 type="submit"
-                className="w-full bg-primary text-on-primary py-4 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-[0.98] cursor-pointer shadow-lg"
+                disabled={isLoading}
+                className={`w-full py-4 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase transition-all shadow-lg flex items-center justify-center gap-2 ${
+                  isLoading
+                    ? "bg-surface-container-highest text-on-surface-variant/50 cursor-not-allowed"
+                    : "bg-primary text-on-primary hover:glow-orange-sm active:scale-[0.98] cursor-pointer"
+                }`}
                 id="btn-subscribe"
               >
-                Подписаться
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Подписка...</span>
+                  </>
+                ) : (
+                  "Подписаться"
+                )}
               </button>
-              <p className="text-[10px] text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
+              <p className="text-xs text-on-surface-variant/60 text-center leading-normal font-medium mt-1">
                 Нажимая кнопку, вы безоговорочно соглашаетесь со всеми условиями обработки персональных данных и нашей политикой конфиденциальности.
               </p>
             </form>

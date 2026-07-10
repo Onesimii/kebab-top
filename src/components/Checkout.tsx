@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { Truck, CreditCard, Trash2, ArrowRight, HelpCircle, Check, MapPin } from "lucide-react";
+import { Truck, CreditCard, Trash2, ArrowRight, HelpCircle, Check, MapPin, Loader2 } from "lucide-react";
 import { CartItem, DeliveryDetails, PaymentMethod } from "../types";
 
 interface CheckoutProps {
@@ -31,11 +31,14 @@ export default function Checkout({
   onBackToMenu,
 }: CheckoutProps) {
   const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>({});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleValidateAndSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     const errors: { [key: string]: boolean } = {};
     if (!deliveryDetails.city.trim()) errors.city = true;
     if (!deliveryDetails.street.trim()) errors.street = true;
@@ -51,14 +54,20 @@ export default function Checkout({
     }
 
     setFormErrors({});
-    onSubmitOrder();
+    setIsSubmitting(true);
+
+    // Simulate API call delay for better UX feedback
+    setTimeout(() => {
+      setIsSubmitting(false);
+      onSubmitOrder();
+    }, 1500);
   };
 
   return (
     <main className="pt-24 pb-20 max-w-7xl mx-auto px-6 md:px-16" id="checkout-screen">
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Left column: Address + Payment Form */}
-        <form onSubmit={handleValidateAndSubmit} className="flex-1 space-y-8">
+        <form onSubmit={handleValidateAndSubmit} className="flex-1 space-y-8" noValidate>
           <div>
             <h1 className="font-display text-3xl md:text-4xl font-extrabold mb-6 text-primary">
               Оформление заказа
@@ -90,9 +99,16 @@ export default function Checkout({
                       formErrors.city ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
                     }`}
                     placeholder="Москва"
+                    aria-invalid={formErrors.city}
+                    aria-describedby={formErrors.city ? "error-city" : undefined}
+                    disabled={isSubmitting}
                   />
                   {formErrors.city && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span
+                      id="error-city"
+                      className="text-xs text-red-400 font-bold ml-1 animate-fade-in"
+                      role="alert"
+                    >
                       * Обязательное поле
                     </span>
                   )}
@@ -116,9 +132,16 @@ export default function Checkout({
                       formErrors.street ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
                     }`}
                     placeholder="Введите название улицы"
+                    aria-invalid={formErrors.street}
+                    aria-describedby={formErrors.street ? "error-street" : undefined}
+                    disabled={isSubmitting}
                   />
                   {formErrors.street && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span
+                      id="error-street"
+                      className="text-xs text-red-400 font-bold ml-1 animate-fade-in"
+                      role="alert"
+                    >
                       * Обязательное поле
                     </span>
                   )}
@@ -143,9 +166,16 @@ export default function Checkout({
                         formErrors.building ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
                       }`}
                       placeholder="12"
+                      aria-invalid={formErrors.building}
+                      aria-describedby={formErrors.building ? "error-building" : undefined}
+                      disabled={isSubmitting}
                     />
                     {formErrors.building && (
-                      <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                      <span
+                        id="error-building"
+                        className="text-xs text-red-400 font-bold ml-1 animate-fade-in"
+                        role="alert"
+                      >
                         * Обязательно
                       </span>
                     )}
@@ -160,8 +190,9 @@ export default function Checkout({
                       type="text"
                       value={deliveryDetails.entrance}
                       onChange={(e) => onUpdateAddress({ entrance: e.target.value })}
-                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50"
                       placeholder="1"
+                      disabled={isSubmitting}
                     />
                   </div>
 
@@ -174,8 +205,9 @@ export default function Checkout({
                       type="text"
                       value={deliveryDetails.apartment}
                       onChange={(e) => onUpdateAddress({ apartment: e.target.value })}
-                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50"
                       placeholder="42"
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -189,9 +221,10 @@ export default function Checkout({
                   id="comment"
                   value={deliveryDetails.comment}
                   onChange={(e) => onUpdateAddress({ comment: e.target.value })}
-                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-50"
                   placeholder="Код домофона, как быстрее найти вход..."
                   rows={2}
+                  disabled={isSubmitting}
                 />
               </div>
             </div>
@@ -417,19 +450,28 @@ export default function Checkout({
 
               <button
                 onClick={handleValidateAndSubmit}
-                disabled={cart.length === 0}
+                disabled={cart.length === 0 || isSubmitting}
                 className={`w-full py-4 mt-2 font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg ${
-                  cart.length === 0
+                  cart.length === 0 || isSubmitting
                     ? "bg-surface-container-highest text-on-surface-variant/40 cursor-not-allowed opacity-60"
                     : "bg-primary text-on-primary hover:glow-orange-sm active:scale-[0.98] cursor-pointer"
                 }`}
                 id="btn-place-order"
               >
-                <span>Оформить заказ</span>
-                <ArrowRight className="w-4 h-4" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Оформление...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Оформить заказ</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
 
-              <p className="text-[10px] text-center text-on-surface-variant/50 leading-relaxed font-medium">
+              <p className="text-xs text-center text-on-surface-variant/50 leading-relaxed font-medium">
                 Нажимая кнопку, вы соглашаетесь с условиями{" "}
                 <a href="#offer" className="underline hover:text-primary transition-colors">
                   оферты

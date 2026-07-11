@@ -57,15 +57,17 @@ export default function CategoryGrid({
           </button>
           <button
             onClick={() => scrollMenuList("left")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             id="cat-scroll-left"
+            aria-label="Листнуть влево"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => scrollMenuList("right")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             id="cat-scroll-right"
+            aria-label="Листнуть вправо"
           >
             <ArrowRight className="w-5 h-5" />
           </button>
@@ -214,7 +216,7 @@ export default function CategoryGrid({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {item.price > 450 && (
-                    <span className="absolute top-3 left-3 bg-primary-container text-on-primary-container text-[11px] uppercase tracking-wider font-bold px-2 px-y rounded-md font-label-lg">
+                    <span className="absolute top-3 left-3 bg-primary-container text-on-primary-container text-xs uppercase tracking-wider font-bold px-2 px-y rounded-md font-label-lg">
                       Шеф-Выбор
                     </span>
                   )}

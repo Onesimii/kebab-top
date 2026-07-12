@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-24 - Accessibility Overhaul for Clickable Grids
+**Learning:** Transforming static "clickable divs" into fully accessible interactive elements requires a multi-faceted approach: adding `role="button"`, `tabIndex={0}`, and `onKeyDown` handlers (for Enter and Space), along with descriptive `aria-label` and `focus-visible` ring styles. This ensures that complex visual layouts (like Bento grids) are equally navigable and understandable for keyboard and screen reader users.
+**Action:** When creating custom interactive cards or grids, always implement the full suite of ARIA attributes and keyboard handlers to ensure full accessibility.

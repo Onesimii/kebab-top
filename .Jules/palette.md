@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-28 - Application-wide Accessibility & Legibility Polish
+**Learning:** Systematic remediation of sub-12px text (`text-[10px]`, `text-[11px]`) across a codebase drastically improves universal design without compromising visual hierarchy, as long as weight and contrast are balanced. Standardizing focus-visible states ensures keyboard users are not "lost" during complex flows (like drawer navigation or item customization).
+**Action:** Proactively audit and replace all sub-12px font utilities with `text-xs`. Always pair icon-only interaction buttons with localized `aria-label` and `focus-visible` ring utilities to ensure the application remains operable for assistive technology and keyboard-only users.

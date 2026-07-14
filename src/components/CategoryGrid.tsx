@@ -20,6 +20,13 @@ export default function CategoryGrid({
 }: CategoryGridProps) {
   const menuListRef = useRef<HTMLDivElement>(null);
 
+  const handleKeyDown = (callback: () => void) => (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      callback();
+    }
+  };
+
   const scrollMenuList = (direction: "left" | "right") => {
     if (menuListRef.current) {
       const scrollAmt = direction === "left" ? -350 : 350;
@@ -57,15 +64,17 @@ export default function CategoryGrid({
           </button>
           <button
             onClick={() => scrollMenuList("left")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             id="cat-scroll-left"
+            aria-label="Прокрутить влево"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => scrollMenuList("right")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             id="cat-scroll-right"
+            aria-label="Прокрутить вправо"
           >
             <ArrowRight className="w-5 h-5" />
           </button>
@@ -77,7 +86,11 @@ export default function CategoryGrid({
         {/* Large Card: Кебабы */}
         <div
           onClick={() => onSelectCategory(Category.KEBABS)}
-          className={`md:col-span-7 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.KEBABS))}
+          role="button"
+          tabIndex={0}
+          aria-label="Категория: Кебабы"
+          className={`md:col-span-7 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.KEBABS ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-kebabs"
@@ -104,7 +117,11 @@ export default function CategoryGrid({
         {/* Vertical Card: Шаурма */}
         <div
           onClick={() => onSelectCategory(Category.SHAWARMA)}
-          className={`md:col-span-5 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.SHAWARMA))}
+          role="button"
+          tabIndex={0}
+          aria-label="Категория: Шаурма"
+          className={`md:col-span-5 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.SHAWARMA ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-shawarma"
@@ -131,7 +148,11 @@ export default function CategoryGrid({
         {/* Half Card: Гарниры */}
         <div
           onClick={() => onSelectCategory(Category.SIDES)}
-          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.SIDES))}
+          role="button"
+          tabIndex={0}
+          aria-label="Категория: Гарниры"
+          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.SIDES ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-sides"
@@ -155,7 +176,11 @@ export default function CategoryGrid({
         {/* Half Card: Напитки */}
         <div
           onClick={() => onSelectCategory(Category.DRINKS)}
-          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.DRINKS))}
+          role="button"
+          tabIndex={0}
+          aria-label="Категория: Напитки"
+          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.DRINKS ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-drinks"
@@ -203,7 +228,11 @@ export default function CategoryGrid({
             <div
               key={item.id}
               onClick={() => onSelectProduct(item)}
-              className="bg-surface-container rounded-xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1.5 border border-outline-variant/10 hover:border-primary/50 cursor-pointer flex flex-col group justify-between"
+              onKeyDown={handleKeyDown(() => onSelectProduct(item))}
+              role="button"
+              tabIndex={0}
+              aria-label={`Выбрать ${item.name}`}
+              className="bg-surface-container rounded-xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1.5 border border-outline-variant/10 hover:border-primary/50 cursor-pointer flex flex-col group justify-between focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               id={`item-card-${item.id}`}
             >
               <div>

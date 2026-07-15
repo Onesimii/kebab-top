@@ -27,6 +27,13 @@ export default function CategoryGrid({
     }
   };
 
+  const handleKeyDown = (callback: () => void) => (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      callback();
+    }
+  };
+
   const filteredItems = selectedCategory
     ? MENU_ITEMS.filter((item) => item.category === selectedCategory)
     : MENU_ITEMS;
@@ -46,7 +53,7 @@ export default function CategoryGrid({
         <div className="flex gap-3">
           <button
             onClick={() => onSelectCategory(null)}
-            className={`px-4 py-2 text-xs font-bold rounded-full transition-all cursor-pointer ${
+            className={`px-4 py-2 text-xs font-bold rounded-full transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
               selectedCategory === null
                 ? "bg-primary text-on-primary font-extrabold"
                 : "border border-outline-variant text-on-surface hover:border-primary hover:text-primary"
@@ -57,15 +64,17 @@ export default function CategoryGrid({
           </button>
           <button
             onClick={() => scrollMenuList("left")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
             id="cat-scroll-left"
+            aria-label="Листать меню влево"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => scrollMenuList("right")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
             id="cat-scroll-right"
+            aria-label="Листать меню вправо"
           >
             <ArrowRight className="w-5 h-5" />
           </button>
@@ -76,11 +85,15 @@ export default function CategoryGrid({
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-16">
         {/* Large Card: Кебабы */}
         <div
+          role="button"
+          tabIndex={0}
           onClick={() => onSelectCategory(Category.KEBABS)}
-          className={`md:col-span-7 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.KEBABS))}
+          className={`md:col-span-7 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.KEBABS ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-kebabs"
+          aria-label="Категория: Кебабы"
         >
           <img
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -103,11 +116,15 @@ export default function CategoryGrid({
 
         {/* Vertical Card: Шаурма */}
         <div
+          role="button"
+          tabIndex={0}
           onClick={() => onSelectCategory(Category.SHAWARMA)}
-          className={`md:col-span-5 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.SHAWARMA))}
+          className={`md:col-span-5 group relative h-[400px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.SHAWARMA ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-shawarma"
+          aria-label="Категория: Шаурма"
         >
           <img
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -130,11 +147,15 @@ export default function CategoryGrid({
 
         {/* Half Card: Гарниры */}
         <div
+          role="button"
+          tabIndex={0}
           onClick={() => onSelectCategory(Category.SIDES)}
-          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.SIDES))}
+          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.SIDES ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-sides"
+          aria-label="Категория: Гарниры"
         >
           <img
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -154,11 +175,15 @@ export default function CategoryGrid({
 
         {/* Half Card: Напитки */}
         <div
+          role="button"
+          tabIndex={0}
           onClick={() => onSelectCategory(Category.DRINKS)}
-          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all ${
+          onKeyDown={handleKeyDown(() => onSelectCategory(Category.DRINKS))}
+          className={`md:col-span-6 group relative h-[300px] rounded-xl overflow-hidden shadow-[0_4px_20px_rgba(30,20,10,0.4)] cursor-pointer border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
             selectedCategory === Category.DRINKS ? "border-primary scale-[0.99] ring-2 ring-primary/40" : "border-transparent"
           }`}
           id="bento-drinks"
+          aria-label="Категория: Напитки"
         >
           <img
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
@@ -202,9 +227,13 @@ export default function CategoryGrid({
           {filteredItems.map((item) => (
             <div
               key={item.id}
+              role="button"
+              tabIndex={0}
               onClick={() => onSelectProduct(item)}
-              className="bg-surface-container rounded-xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1.5 border border-outline-variant/10 hover:border-primary/50 cursor-pointer flex flex-col group justify-between"
+              onKeyDown={handleKeyDown(() => onSelectProduct(item))}
+              className="bg-surface-container rounded-xl overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1.5 border border-outline-variant/10 hover:border-primary/50 cursor-pointer flex flex-col group justify-between focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               id={`item-card-${item.id}`}
+              aria-label={`Продукт: ${item.name}`}
             >
               <div>
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
@@ -233,15 +262,11 @@ export default function CategoryGrid({
               </div>
 
               <div className="px-5 pb-5 pt-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSelectProduct(item);
-                  }}
-                  className="w-full bg-surface-container-high hover:bg-primary hover:text-on-primary text-primary transition-all duration-300 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase font-label-lg"
+                <div
+                  className="w-full bg-surface-container-high group-hover:bg-primary group-hover:text-on-primary text-primary transition-all duration-300 py-2.5 rounded-lg text-xs font-bold tracking-wider uppercase font-label-lg text-center"
                 >
                   Выбрать
-                </button>
+                </div>
               </div>
             </div>
           ))}

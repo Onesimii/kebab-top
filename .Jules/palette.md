@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-16 - Submission Flow & Input Locking
+**Learning:** For critical async actions like order submission, simply adding a spinner is only half the battle. "Locking" the entire form—disabling all inputs, quantity controls, and navigation buttons—prevents state inconsistencies and accidental double-submissions, creating a much more stable and professional "transactional" feel.
+**Action:** During submission states, globally disable all interactive elements within the form and related summary components to ensure a deterministic outcome.

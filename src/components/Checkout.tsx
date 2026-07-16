@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { Truck, CreditCard, Trash2, ArrowRight, HelpCircle, Check, MapPin } from "lucide-react";
+import { Truck, CreditCard, Trash2, ArrowRight, Check, Loader2 } from "lucide-react";
 import { CartItem, DeliveryDetails, PaymentMethod } from "../types";
 
 interface CheckoutProps {
@@ -31,11 +31,14 @@ export default function Checkout({
   onBackToMenu,
 }: CheckoutProps) {
   const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>({});
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handleValidateAndSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     const errors: { [key: string]: boolean } = {};
     if (!deliveryDetails.city.trim()) errors.city = true;
     if (!deliveryDetails.street.trim()) errors.street = true;
@@ -51,14 +54,20 @@ export default function Checkout({
     }
 
     setFormErrors({});
-    onSubmitOrder();
+    setIsSubmitting(true);
+
+    // Simulate API call for better UX confirmation
+    setTimeout(() => {
+      onSubmitOrder();
+      setIsSubmitting(false);
+    }, 1500);
   };
 
   return (
     <main className="pt-24 pb-20 max-w-7xl mx-auto px-6 md:px-16" id="checkout-screen">
       <div className="flex flex-col lg:flex-row gap-10">
         {/* Left column: Address + Payment Form */}
-        <form onSubmit={handleValidateAndSubmit} className="flex-1 space-y-8">
+        <form onSubmit={handleValidateAndSubmit} className="flex-1 space-y-8" noValidate>
           <div>
             <h1 className="font-display text-3xl md:text-4xl font-extrabold mb-6 text-primary">
               Оформление заказа
@@ -86,13 +95,16 @@ export default function Checkout({
                         setFormErrors((prev) => ({ ...prev, city: false }));
                       }
                     }}
+                    disabled={isSubmitting}
+                    aria-invalid={formErrors.city}
+                    aria-describedby={formErrors.city ? "city-error" : undefined}
                     className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
                       formErrors.city ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
-                    }`}
+                    } ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                     placeholder="Москва"
                   />
                   {formErrors.city && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span id="city-error" role="alert" className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
                       * Обязательное поле
                     </span>
                   )}
@@ -112,13 +124,16 @@ export default function Checkout({
                         setFormErrors((prev) => ({ ...prev, street: false }));
                       }
                     }}
+                    disabled={isSubmitting}
+                    aria-invalid={formErrors.street}
+                    aria-describedby={formErrors.street ? "street-error" : undefined}
                     className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
                       formErrors.street ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
-                    }`}
+                    } ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                     placeholder="Введите название улицы"
                   />
                   {formErrors.street && (
-                    <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                    <span id="street-error" role="alert" className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
                       * Обязательное поле
                     </span>
                   )}
@@ -139,13 +154,16 @@ export default function Checkout({
                           setFormErrors((prev) => ({ ...prev, building: false }));
                         }
                       }}
+                      disabled={isSubmitting}
+                      aria-invalid={formErrors.building}
+                      aria-describedby={formErrors.building ? "building-error" : undefined}
                       className={`w-full bg-surface-container-lowest border rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${
                         formErrors.building ? "border-red-400 focus:ring-red-400 focus:border-red-400" : "border-outline-variant"
-                      }`}
+                      } ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                       placeholder="12"
                     />
                     {formErrors.building && (
-                      <span className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
+                      <span id="building-error" role="alert" className="text-[10px] text-red-400 font-bold ml-1 animate-fade-in">
                         * Обязательно
                       </span>
                     )}
@@ -160,7 +178,8 @@ export default function Checkout({
                       type="text"
                       value={deliveryDetails.entrance}
                       onChange={(e) => onUpdateAddress({ entrance: e.target.value })}
-                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      disabled={isSubmitting}
+                      className={`w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                       placeholder="1"
                     />
                   </div>
@@ -174,7 +193,8 @@ export default function Checkout({
                       type="text"
                       value={deliveryDetails.apartment}
                       onChange={(e) => onUpdateAddress({ apartment: e.target.value })}
-                      className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                      disabled={isSubmitting}
+                      className={`w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                       placeholder="42"
                     />
                   </div>
@@ -189,7 +209,8 @@ export default function Checkout({
                   id="comment"
                   value={deliveryDetails.comment}
                   onChange={(e) => onUpdateAddress({ comment: e.target.value })}
-                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  disabled={isSubmitting}
+                  className={`w-full bg-surface-container-lowest border border-outline-variant rounded-xl p-3 text-on-surface transition-all font-medium text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                   placeholder="Код домофона, как быстрее найти вход..."
                   rows={2}
                 />
@@ -215,19 +236,20 @@ export default function Checkout({
               <div
                 role="radio"
                 aria-checked={paymentMethod === PaymentMethod.CARD}
-                tabIndex={0}
-                onClick={() => onUpdatePayment(PaymentMethod.CARD)}
+                tabIndex={isSubmitting ? -1 : 0}
+                onClick={() => !isSubmitting && onUpdatePayment(PaymentMethod.CARD)}
                 onKeyDown={(e) => {
+                  if (isSubmitting) return;
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     onUpdatePayment(PaymentMethod.CARD);
                   }
                 }}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                className={`relative flex items-center p-5 rounded-xl transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                   paymentMethod === PaymentMethod.CARD
                     ? "bg-surface-container-lowest border-primary"
                     : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
-                }`}
+                } ${isSubmitting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 id="payment-method-card"
               >
                 <div className="flex items-center gap-3">
@@ -256,19 +278,20 @@ export default function Checkout({
               <div
                 role="radio"
                 aria-checked={paymentMethod === PaymentMethod.CASH}
-                tabIndex={0}
-                onClick={() => onUpdatePayment(PaymentMethod.CASH)}
+                tabIndex={isSubmitting ? -1 : 0}
+                onClick={() => !isSubmitting && onUpdatePayment(PaymentMethod.CASH)}
                 onKeyDown={(e) => {
+                  if (isSubmitting) return;
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
                     onUpdatePayment(PaymentMethod.CASH);
                   }
                 }}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                className={`relative flex items-center p-5 rounded-xl transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                   paymentMethod === PaymentMethod.CASH
                     ? "bg-surface-container-lowest border-primary"
                     : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
-                }`}
+                } ${isSubmitting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                 id="payment-method-cash"
               >
                 <div className="flex items-center gap-3">
@@ -303,7 +326,8 @@ export default function Checkout({
               <h3 className="font-display font-extrabold text-lg text-primary">Ваш заказ</h3>
               <button
                 onClick={onBackToMenu}
-                className="text-xs font-semibold text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+                disabled={isSubmitting}
+                className={`text-xs font-semibold text-on-surface-variant transition-colors ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:text-primary cursor-pointer"}`}
                 id="btn-add-more-checkout"
               >
                 + Добавить блюда
@@ -366,7 +390,8 @@ export default function Checkout({
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                              className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all cursor-pointer"
+                              disabled={isSubmitting}
+                              className={`w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant transition-all ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:text-white hover:bg-primary cursor-pointer"}`}
                               id={`qty-dec-${item.id}`}
                               aria-label="Уменьшить количество"
                             >
@@ -377,7 +402,8 @@ export default function Checkout({
                             </span>
                             <button
                               onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                              className="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all cursor-pointer"
+                              disabled={isSubmitting}
+                              className={`w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant transition-all ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:text-white hover:bg-primary cursor-pointer"}`}
                               id={`qty-inc-${item.id}`}
                               aria-label="Увеличить количество"
                             >
@@ -386,7 +412,8 @@ export default function Checkout({
                           </div>
                           <button
                             onClick={() => onRemoveItem(item.id)}
-                            className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                            disabled={isSubmitting}
+                            className={`text-on-surface-variant transition-colors p-1 rounded ${isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:text-red-400 hover:bg-surface-container cursor-pointer"}`}
                             id={`trash-${item.id}`}
                             aria-label="Удалить из корзины"
                           >
@@ -417,16 +444,25 @@ export default function Checkout({
 
               <button
                 onClick={handleValidateAndSubmit}
-                disabled={cart.length === 0}
+                disabled={cart.length === 0 || isSubmitting}
                 className={`w-full py-4 mt-2 font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg ${
-                  cart.length === 0
+                  cart.length === 0 || isSubmitting
                     ? "bg-surface-container-highest text-on-surface-variant/40 cursor-not-allowed opacity-60"
                     : "bg-primary text-on-primary hover:glow-orange-sm active:scale-[0.98] cursor-pointer"
                 }`}
                 id="btn-place-order"
               >
-                <span>Оформить заказ</span>
-                <ArrowRight className="w-4 h-4" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Оформление...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Оформить заказ</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
 
               <p className="text-[10px] text-center text-on-surface-variant/50 leading-relaxed font-medium">

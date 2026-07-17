@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-15 - Interactive Grid Cards & Nested Interactive Elements
+**Learning:** Nesting interactive buttons (like a "Details" button) inside a card that is already interactive itself (having a click handler) violates HTML validation rules and confuses screen readers. Standardizing the card as the single interactive node (`role="button"`, `tabIndex={0}`, with curried keyboard handlers for Enter/Space) and refactoring inner interactive elements into beautifully-styled non-interactive elements (with transitions driven by parent hover/focus) resolves this issue completely.
+**Action:** Always avoid nesting buttons inside clickable cards or list items. Make the card the single focusable interactive node and refactor inner components to non-interactive types.

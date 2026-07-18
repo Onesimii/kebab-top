@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-18 - Accessibility of Interactive Custom Drawer & Detail Modifiers
+**Learning:** In highly customized, interactive e-commerce single-page applications, custom-built drawers (e.g., cart drawers), product detail modifiers (e.g., ingredient adjusters), and category navigation arrows are frequently designed for visual appeal but completely lack semantic meaning or keyboard focus feedback. Adding descriptive ARIA labels, polite live regions (`aria-live="polite"`), and explicit visual focus states (`focus-visible`) directly bridges this visual-auditory gap for assistive technologies.
+**Action:** Always inspect custom quantity adjustment controls, horizontal scroll arrows, and close buttons on custom drawer overlays to ensure they are fully navigable by keyboard with clear focused states and proper localized screen reader labels.

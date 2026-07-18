@@ -130,18 +130,20 @@ export default function ProductDetail({
                 <div className="flex items-center gap-3">
                   <button
                     onClick={handleDecrementSauce}
-                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
+                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                     id="sauce-decrement"
+                    aria-label="Уменьшить количество соуса"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="font-label-lg font-bold w-5 text-center text-sm">
+                  <span className="font-label-lg font-bold w-5 text-center text-sm" aria-live="polite">
                     {extraSauceCount}
                   </span>
                   <button
                     onClick={handleIncrementSauce}
-                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
+                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                     id="sauce-increment"
+                    aria-label="Увеличить количество соуса"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -170,8 +172,9 @@ export default function ProductDetail({
                     className="sr-only peer"
                     type="checkbox"
                     id="checkbox-onion"
+                    aria-label="Добавить больше маринованного лука"
                   />
-                  <div className="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-secondary after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+                  <div className="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-secondary after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container peer-focus-visible:ring-2 peer-focus-visible:ring-primary"></div>
                 </label>
               </div>
             </div>

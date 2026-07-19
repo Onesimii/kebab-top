@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-10-24 - Accessibility Localization & Keyboard Focus States
+**Learning:** In a fully localized application, ARIA labels and screen reader descriptions must be localized to match the UI language to avoid confusing pronunciation mixtures for screen readers. Furthermore, interactive controls (like scroll buttons, custom toggle switches, and quantity adjusters) require explicit, high-contrast focus indicators (`focus-visible:ring-2`) and keyboard focus outlines to ensure seamless accessibility for keyboard navigators without visually cluttering the layout for pointer-based users.
+**Action:** When remediating accessibility, localize all ARIA attributes to match the document language, and always pair native/custom interactive components with robust `focus-visible` styles and clear labels.

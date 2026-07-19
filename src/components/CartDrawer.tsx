@@ -51,8 +51,9 @@ export default function CartDrawer({
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high cursor-pointer transition-all"
+            className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none cursor-pointer transition-all"
             id="cart-drawer-close"
+            aria-label="Закрыть корзину"
           >
             <X className="w-5 h-5" />
           </button>
@@ -116,7 +117,8 @@ export default function CartDrawer({
                       <div className="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/10 rounded-lg p-0.5">
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                            className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all text-xs font-bold cursor-pointer"
+                            aria-label="Уменьшить количество"
                         >
                           -
                         </button>
@@ -125,14 +127,16 @@ export default function CartDrawer({
                         </span>
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                            className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all text-xs font-bold cursor-pointer"
+                            aria-label="Увеличить количество"
                         >
                           +
                         </button>
                       </div>
                       <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                          className="text-on-surface-variant hover:text-red-400 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                          aria-label="Удалить из корзины"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

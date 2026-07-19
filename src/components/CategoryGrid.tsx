@@ -57,15 +57,17 @@ export default function CategoryGrid({
           </button>
           <button
             onClick={() => scrollMenuList("left")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
             id="cat-scroll-left"
+            aria-label="Прокрутить меню влево"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <button
             onClick={() => scrollMenuList("right")}
-            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary transition-all cursor-pointer"
+            className="w-11 h-11 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
             id="cat-scroll-right"
+            aria-label="Прокрутить меню вправо"
           >
             <ArrowRight className="w-5 h-5" />
           </button>

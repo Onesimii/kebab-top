@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-23 - Interactive Cards & Semantic Markup
+**Learning:** Nesting standard interactive elements (like a `<button>`) inside another interactive element (like a card wrapper `<div>` with onClick/onKeyDown) is an accessibility and HTML validation violation that confuses screen readers and breaks layout tree expectation. Instead, the card wrapper should act as the single primary interactive element with keyboard handlers, while inner actionable markers can be styled as semantic non-interactive sub-elements.
+**Action:** Always refactor nested interactive buttons inside clickable cards to use a single wrapper interactive element, converting inner markers to styled, non-interactive visual containers that react to group focus/hover states.

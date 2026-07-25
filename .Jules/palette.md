@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-25 - Checkout Loading & Input Disabling State
+**Learning:** For forms involving order placement or payment transactions, implementing a robust submission flow is critical. Disabling all interactive controls (inputs, checkboxes, textarea, radios, quantity adjusters, and buttons) during asynchronous submission prevents state conflicts, data inconsistencies, or duplicate orders. Pairing this with a 1.5s simulated loading indicator (such as `Loader2` from `lucide-react`) and Russian localized aria-invalid attributes elevates both security, accessibility, and user Delight.
+**Action:** Ensure all async form operations enforce a full disabled state for all active components on screen and render loading indicators with localized text dynamically.

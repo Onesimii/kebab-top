@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-28 - Bento Grid Keyboard Navigation & Screen Reader Support
+**Learning:** Bento layouts and grids where decorative divs act as category filters are common but inaccessible to keyboard and screen-reader users by default. Implementing semantic roles (`role="button"`), accessible names (via localized `aria-label`), keyboard navigation keydown handlers (for 'Enter' and 'Space'), and dedicated focus indicators (`focus-visible:ring-2`) resolves this completely while keeping layout designs completely intact.
+**Action:** For interactive grids where `div` elements act as buttons, use a curried keydown handler alongside `role="button"` and `tabIndex={0}` to cleanly manage keyboard interaction without adding custom CSS or breaking styles.

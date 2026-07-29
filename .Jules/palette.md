@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-29 - Nested Interactive Elements and Keyboard Traps in Bento Grids
+**Learning:** Combining nested `<button>` or standard click handlers inside an interactive card container can cause HTML validation errors and confuse screen readers. Instead, converting the card itself into a semantic interactive element (`role="button"`, `tabIndex={0}`, keyboard listeners) and refactoring inner elements into passive styled `div`s maintains the hover effects and interaction without triggering a11y violations.
+**Action:** Always inspect custom grid card designs for nested interactive buttons, and elevate interactive controls to the wrapper while transforming inner components to non-interactive styling.

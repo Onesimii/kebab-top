@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-30 - Product Customization Interactivity and Keyboard Focus
+**Learning:** Interactive toggles (like `sr-only` inputs wrapping custom Tailwind divs) and icon-only buttons inside product details default to being visually inaccessible and hard to navigate via keyboard. Linking visual elements using proper HTML `<label htmlFor="...">` and applying focus ring utilities on custom elements via focus-within state transitions (such as `peer-focus-visible:ring-2`) resolves this.
+**Action:** Always map screen-reader-hidden inputs with custom visual wrappers to `focus-visible` or `peer-focus-visible` classes so tab-navigation outlines are visible, and associate visual label elements using semantic `<label>` elements.

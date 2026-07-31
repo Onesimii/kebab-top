@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-15 - Cart Drawer Accessibility & Keyboard Focus Polishing
+**Learning:** Off-canvas slide-out panels (drawers) must provide highly visible keyboard focus feedback and localized ARIA labels on controls like quantity adjusters and trash icons. Without them, keyboard users are left blindly tabbing through non-indicated interactive regions, and screen reader users cannot safely adjust checkout values.
+**Action:** When working with drawers or dialog overlays, explicitly bind Tailwind focus-visible ring styles (e.g., `focus-visible:ring-2`) and add precise `aria-label` tags for all nested micro-actions.

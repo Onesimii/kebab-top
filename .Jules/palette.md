@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-15 - Hero CTA Focus Indicators on Saturated Backgrounds
+**Learning:** High-impact hero CTA buttons with primary color backgrounds (e.g., solid orange/red) can easily swallow matching primary focus rings (e.g., `focus-visible:ring-primary`), rendering them invisible to keyboard navigators. In dark/saturated hero sections, a high-contrast focus ring with distinct outlines or custom rings ensures proper visibility.
+**Action:** When applying focus styles to solid primary/secondary buttons, inspect visual contrast of the ring. Use contrast-enhancing techniques like ring-offset or high-contrast ring colors suitable to the hero background image/gradient.

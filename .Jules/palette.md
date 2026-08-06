@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-08-06 - Accessible Visually Hidden Toggle Focus
+**Learning:** Custom toggle switches implemented with `sr-only` inputs lose their visual focus ring when navigating via keyboard. Utilizing `peer-focus-visible` ring utilities on the sibling custom switch div restores keyboard accessibility while keeping the native styling intact.
+**Action:** Always pair `sr-only` custom toggle inputs with `peer-focus-visible` styles on the visible indicator element to guarantee keyboard visual focus state feedback.

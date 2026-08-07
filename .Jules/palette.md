@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-08-06 - Scroll Restoration on Screen Transitions
+**Learning:** In Single Page Applications (SPAs) where screen transitions are state-driven, navigating to a new screen can preserve the window's scroll position from the previous screen. This leaves the user disoriented, looking at the middle or bottom of the newly navigated screen. Instantly resetting scroll position on transition restores expected "new page" flow and visual hierarchy.
+**Action:** Always listen to key screen/navigation changes and programmatically scroll the window back to the top of the viewport (`window.scrollTo({ top: 0, behavior: "instant" })`).

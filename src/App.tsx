@@ -91,6 +91,11 @@ export default function App() {
     details: DeliveryDetails;
   } | null>(null);
 
+  // Scroll to top on screen transition for optimal user experience and context restoration
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as any });
+  }, [currentScreen]);
+
   const saveCart = (newCart: CartItem[]) => {
     setCart(newCart);
     try {

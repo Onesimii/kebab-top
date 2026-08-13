@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { CheckCircle, Clock, MapPin, Sparkles, Flame, User } from "lucide-react";
 import { CartItem, DeliveryDetails } from "../types";
 
@@ -20,6 +20,9 @@ export default function OrderSuccessModal({
   totalPrice,
   onClose,
 }: OrderSuccessModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   const [prepStep, setPrepStep] = useState<number>(0);
   const [secondsLeft, setSecondsLeft] = useState<number>(1200); // 20 minutes in seconds
 
@@ -55,6 +58,24 @@ export default function OrderSuccessModal({
     return () => clearInterval(timerInterval);
   }, []);
 
+  // Set focus on mount and listen for Escape key press to close modal
+  useEffect(() => {
+    if (closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
     const remainingSecs = secs % 60;
@@ -63,9 +84,37 @@ export default function OrderSuccessModal({
 
   const simulatedOrderId = Math.floor(100000 + Math.random() * 900000);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Tab") {
+      if (!modalRef.current) return;
+      const focusableElements = modalRef.current.querySelectorAll<HTMLElement>(
+        'button, [href], input, select, textarea, [tabIndex]:not([tabIndex="-1"])'
+      );
+      if (focusableElements.length === 0) return;
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto custom-scrollbar select-none">
-      <div className="bg-surface-container max-w-2xl w-full rounded-2xl overflow-hidden border border-primary/30 shadow-[0_12px_45px_rgba(0,0,0,0.6)] animate-scale-up">
+      <div
+        ref={modalRef}
+        onKeyDown={handleKeyDown}
+        className="bg-surface-container max-w-2xl w-full rounded-2xl overflow-hidden border border-primary/30 shadow-[0_12px_45px_rgba(0,0,0,0.6)] animate-scale-up"
+      >
         {/* Glowing Head */}
         <div className="p-6 md:p-8 bg-surface-container-highest border-b border-outline-variant/30 text-center space-y-3 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-primary-container to-primary"></div>
@@ -195,8 +244,9 @@ export default function OrderSuccessModal({
         {/* Footer actions */}
         <div className="p-6 md:p-8 bg-surface-container-high border-t border-outline-variant/30 flex justify-center">
           <button
+            ref={closeButtonRef}
             onClick={onClose}
-            className="bg-primary text-on-primary px-10 py-3.5 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-95 cursor-pointer"
+            className="bg-primary text-on-primary px-10 py-3.5 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             id="success-btn-close"
           >
             К новым вкусам!

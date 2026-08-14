@@ -51,8 +51,9 @@ export default function CartDrawer({
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high cursor-pointer transition-all"
+            className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none cursor-pointer transition-all"
             id="cart-drawer-close"
+            aria-label="Закрыть корзину"
           >
             <X className="w-5 h-5" />
           </button>
@@ -116,23 +117,26 @@ export default function CartDrawer({
                       <div className="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/10 rounded-lg p-0.5">
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all text-xs font-bold cursor-pointer"
+                          aria-label={`Уменьшить количество ${item.name}`}
                         >
                           -
                         </button>
-                        <span className="text-[11px] font-bold text-white w-4 text-center">
+                        <span className="text-[11px] font-bold text-white w-4 text-center" aria-live="polite">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all text-xs font-bold cursor-pointer"
+                          aria-label={`Увеличить количество ${item.name}`}
                         >
                           +
                         </button>
                       </div>
                       <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                        className="text-on-surface-variant hover:text-red-400 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                        aria-label={`Удалить ${item.name} из корзины`}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -147,7 +151,7 @@ export default function CartDrawer({
         {/* Tray Footer Pricing + checkout actions */}
         {cart.length > 0 && (
           <div className="p-6 bg-surface-container-high border-t border-outline-variant/15 space-y-4">
-            <div className="flex justify-between items-center text-on-surface">
+            <div className="flex justify-between items-center text-on-surface" aria-live="polite">
               <span className="font-display font-extrabold text-sm uppercase tracking-wider">
                 Сумма заказа
               </span>
@@ -155,7 +159,7 @@ export default function CartDrawer({
             </div>
             <button
               onClick={onGoToCheckout}
-              className="w-full py-4 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg"
+              className="w-full py-4 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer shadow-lg"
               id="drawer-checkout-btn"
             >
               <span>Оформить заказ</span>

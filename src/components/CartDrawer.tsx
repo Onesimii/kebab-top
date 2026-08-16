@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { X, Trash2, ArrowRight, ShoppingBag } from "lucide-react";
 import { CartItem } from "../types";
 
@@ -24,16 +24,35 @@ export default function CartDrawer({
   onRemoveItem,
   onGoToCheckout,
 }: CartDrawerProps) {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <div className="fixed inset-0 z-[100] flex justify-end select-none">
+    <div
+      className="fixed inset-0 z-[100] flex justify-end select-none"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Корзина покупателя"
+    >
       {/* Backdrop overlay filter */}
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer"
         onClick={onClose}
+        aria-hidden="true"
       ></div>
 
       {/* Tray panel */}
@@ -51,8 +70,9 @@ export default function CartDrawer({
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high cursor-pointer transition-all"
+            className="p-1 rounded-full text-on-surface-variant hover:text-white hover:bg-surface-container-high cursor-pointer transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             id="cart-drawer-close"
+            aria-label="Закрыть корзину"
           >
             <X className="w-5 h-5" />
           </button>
@@ -73,7 +93,8 @@ export default function CartDrawer({
               </div>
               <button
                 onClick={onClose}
-                className="bg-primary/10 hover:bg-primary transition-all text-primary hover:text-on-primary font-bold text-xs px-6 py-2.5 rounded-lg border border-primary/20"
+                className="bg-primary/10 hover:bg-primary transition-all text-primary hover:text-on-primary font-bold text-xs px-6 py-2.5 rounded-lg border border-primary/20 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none cursor-pointer"
+                aria-label="Вернуться в меню"
               >
                 Вернуться в меню
               </button>
@@ -116,7 +137,8 @@ export default function CartDrawer({
                       <div className="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/10 rounded-lg p-0.5">
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                          aria-label={`Уменьшить количество ${item.name}`}
                         >
                           -
                         </button>
@@ -125,14 +147,16 @@ export default function CartDrawer({
                         </span>
                         <button
                           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer"
+                          className="w-5.5 h-5.5 rounded-md bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-white hover:bg-primary transition-all text-xs font-bold cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                          aria-label={`Увеличить количество ${item.name}`}
                         >
                           +
                         </button>
                       </div>
                       <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer"
+                        className="text-on-surface-variant hover:text-red-400 transition-colors p-1 rounded hover:bg-surface-container cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                        aria-label={`Удалить ${item.name} из корзины`}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -155,8 +179,9 @@ export default function CartDrawer({
             </div>
             <button
               onClick={onGoToCheckout}
-              className="w-full py-4 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg"
+              className="w-full py-4 bg-primary text-on-primary font-display font-extrabold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 hover:glow-orange-sm active:scale-[0.98] transition-all cursor-pointer shadow-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
               id="drawer-checkout-btn"
+              aria-label="Перейти к оформлению заказа"
             >
               <span>Оформить заказ</span>
               <ArrowRight className="w-4 h-4" />

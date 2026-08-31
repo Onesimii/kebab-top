@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Truck, CreditCard, Trash2, ArrowRight, HelpCircle, Check, MapPin } from "lucide-react";
 import { CartItem, DeliveryDetails, PaymentMethod } from "../types";
 
@@ -33,6 +33,52 @@ export default function Checkout({
   const [formErrors, setFormErrors] = useState<{ [key: string]: boolean }>({});
 
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+
+  const paymentOptions = [
+    {
+      method: PaymentMethod.CARD,
+      Icon: CreditCard,
+      label: "Банковская карта",
+      description: "Онлайн на сайте",
+      id: "payment-method-card",
+    },
+    {
+      method: PaymentMethod.CASH,
+      Icon: Truck,
+      label: "Наличными",
+      description: "Курьеру при получении",
+      id: "payment-method-cash",
+    },
+  ];
+
+  const paymentRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const isPaymentSelected = paymentOptions.some((option) => option.method === paymentMethod);
+
+  const focusPaymentOption = (index: number) => {
+    const option = paymentOptions[index];
+    onUpdatePayment(option.method);
+    paymentRefs.current[index]?.focus();
+  };
+
+  const handlePaymentKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, index: number) => {
+    switch (e.key) {
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        onUpdatePayment(paymentOptions[index].method);
+        break;
+      case "ArrowRight":
+      case "ArrowDown":
+        e.preventDefault();
+        focusPaymentOption((index + 1) % paymentOptions.length);
+        break;
+      case "ArrowLeft":
+      case "ArrowUp":
+        e.preventDefault();
+        focusPaymentOption((index - 1 + paymentOptions.length) % paymentOptions.length);
+        break;
+    }
+  };
 
   const handleValidateAndSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -211,87 +257,50 @@ export default function Checkout({
               aria-labelledby="payment-method-heading"
               className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              {/* Card option toggler */}
-              <div
-                role="radio"
-                aria-checked={paymentMethod === PaymentMethod.CARD}
-                tabIndex={0}
-                onClick={() => onUpdatePayment(PaymentMethod.CARD)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onUpdatePayment(PaymentMethod.CARD);
-                  }
-                }}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                  paymentMethod === PaymentMethod.CARD
-                    ? "bg-surface-container-lowest border-primary"
-                    : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
-                }`}
-                id="payment-method-card"
-              >
-                <div className="flex items-center gap-3">
-                  <CreditCard
-                    className={`w-5 h-5 ${
-                      paymentMethod === PaymentMethod.CARD
-                        ? "text-primary"
-                        : "text-on-surface-variant"
+              {paymentOptions.map((option, index) => {
+                const isSelected = paymentMethod === option.method;
+                const Icon = option.Icon;
+                return (
+                  <div
+                    key={option.method}
+                    ref={(el) => {
+                      paymentRefs.current[index] = el;
+                    }}
+                    role="radio"
+                    aria-checked={isSelected}
+                    tabIndex={isSelected || (!isPaymentSelected && index === 0) ? 0 : -1}
+                    onClick={() => onUpdatePayment(option.method)}
+                    onKeyDown={(e) => handlePaymentKeyDown(e, index)}
+                    className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                      isSelected
+                        ? "bg-surface-container-lowest border-primary"
+                        : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
                     }`}
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-label-lg text-sm text-on-surface font-semibold">
-                      Банковская карта
-                    </span>
-                    <span className="text-xs text-on-surface-variant">Онлайн на сайте</span>
+                    id={option.id}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon
+                        className={`w-5 h-5 ${
+                          isSelected ? "text-primary" : "text-on-surface-variant"
+                        }`}
+                      />
+                      <div className="flex flex-col">
+                        <span className="font-label-lg text-sm text-on-surface font-semibold">
+                          {option.label}
+                        </span>
+                        <span className="text-xs text-on-surface-variant">
+                          {option.description}
+                        </span>
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
+                        ✓
+                      </span>
+                    )}
                   </div>
-                </div>
-                {paymentMethod === PaymentMethod.CARD && (
-                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
-                    ✓
-                  </span>
-                )}
-              </div>
-
-              {/* Cash option toggler */}
-              <div
-                role="radio"
-                aria-checked={paymentMethod === PaymentMethod.CASH}
-                tabIndex={0}
-                onClick={() => onUpdatePayment(PaymentMethod.CASH)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onUpdatePayment(PaymentMethod.CASH);
-                  }
-                }}
-                className={`relative flex items-center p-5 rounded-xl cursor-pointer transition-all border-2 group select-none outline-none focus-visible:ring-2 focus-visible:ring-primary ${
-                  paymentMethod === PaymentMethod.CASH
-                    ? "bg-surface-container-lowest border-primary"
-                    : "bg-surface-container-lowest border-outline-variant hover:border-primary/50"
-                }`}
-                id="payment-method-cash"
-              >
-                <div className="flex items-center gap-3">
-                  <Truck
-                    className={`w-5 h-5 ${
-                      paymentMethod === PaymentMethod.CASH
-                        ? "text-primary"
-                        : "text-on-surface-variant"
-                    }`}
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-label-lg text-sm text-on-surface font-semibold">
-                      Наличными
-                    </span>
-                    <span className="text-xs text-on-surface-variant">Курьеру при получении</span>
-                  </div>
-                </div>
-                {paymentMethod === PaymentMethod.CASH && (
-                  <span className="absolute top-2.5 right-2.5 bg-primary/20 text-primary w-5 h-5 rounded-full flex items-center justify-center border border-primary text-[10px]">
-                    ✓
-                  </span>
-                )}
-              </div>
+                );
+              })}
             </div>
           </div>
         </form>

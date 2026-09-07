@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CheckCircle, Clock, MapPin, Sparkles, Flame, User } from "lucide-react";
 import { CartItem, DeliveryDetails } from "../types";
 
@@ -22,6 +22,41 @@ export default function OrderSuccessModal({
 }: OrderSuccessModalProps) {
   const [prepStep, setPrepStep] = useState<number>(0);
   const [secondsLeft, setSecondsLeft] = useState<number>(1200); // 20 minutes in seconds
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement>(null);
+
+  // Focus close button on mount & handle Escape key + focus trap
+  useEffect(() => {
+    closeBtnRef.current?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key === "Tab" && modalRef.current) {
+        const focusables = modalRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusables.length === 0) return;
+
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
 
   const steps = [
     { label: "Принимаем и подтверждаем заказ", desc: "Уже передали информацию на кухню", activeIcon: Sparkles },
@@ -64,7 +99,13 @@ export default function OrderSuccessModal({
   const simulatedOrderId = Math.floor(100000 + Math.random() * 900000);
 
   return (
-    <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto custom-scrollbar select-none">
+    <div
+      className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 overflow-y-auto custom-scrollbar select-none"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="order-success-title"
+      ref={modalRef}
+    >
       <div className="bg-surface-container max-w-2xl w-full rounded-2xl overflow-hidden border border-primary/30 shadow-[0_12px_45px_rgba(0,0,0,0.6)] animate-scale-up">
         {/* Glowing Head */}
         <div className="p-6 md:p-8 bg-surface-container-highest border-b border-outline-variant/30 text-center space-y-3 relative overflow-hidden">
@@ -76,7 +117,7 @@ export default function OrderSuccessModal({
             <span className="text-[10px] text-primary uppercase tracking-[0.25em] font-extrabold">
               Заказ №{simulatedOrderId} Успешно Оформлен!
             </span>
-            <h2 className="font-display font-black text-2xl md:text-3xl text-white mt-1">
+            <h2 id="order-success-title" className="font-display font-black text-2xl md:text-3xl text-white mt-1">
               Ваш кебаб готовится!
             </h2>
           </div>
@@ -195,8 +236,9 @@ export default function OrderSuccessModal({
         {/* Footer actions */}
         <div className="p-6 md:p-8 bg-surface-container-high border-t border-outline-variant/30 flex justify-center">
           <button
+            ref={closeBtnRef}
             onClick={onClose}
-            className="bg-primary text-on-primary px-10 py-3.5 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-95 cursor-pointer"
+            className="bg-primary text-on-primary px-10 py-3.5 rounded-xl font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all active:scale-95 cursor-pointer"
             id="success-btn-close"
           >
             К новым вкусам!

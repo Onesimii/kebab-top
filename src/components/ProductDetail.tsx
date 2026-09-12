@@ -50,8 +50,9 @@ export default function ProductDetail({
       <div className="mb-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group cursor-pointer"
+          className="flex items-center gap-2 text-on-surface-variant hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-lg transition-colors group cursor-pointer"
           id="btn-back-menu"
+          aria-label="Назад в меню"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           <span className="font-label-lg text-sm font-bold tracking-wider uppercase">
@@ -130,8 +131,10 @@ export default function ProductDetail({
                 <div className="flex items-center gap-3">
                   <button
                     onClick={handleDecrementSauce}
-                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
+                    disabled={extraSauceCount === 0}
+                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
                     id="sauce-decrement"
+                    aria-label="Уменьшить количество соуса"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
@@ -140,8 +143,9 @@ export default function ProductDetail({
                   </span>
                   <button
                     onClick={handleIncrementSauce}
-                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
+                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
                     id="sauce-increment"
+                    aria-label="Увеличить количество соуса"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -170,8 +174,9 @@ export default function ProductDetail({
                     className="sr-only peer"
                     type="checkbox"
                     id="checkbox-onion"
+                    aria-label="Больше маринованного лука"
                   />
-                  <div className="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-secondary after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+                  <div className="w-11 h-6 bg-surface-container-high peer-focus-visible:ring-2 peer-focus-visible:ring-primary peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-secondary after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
                 </label>
               </div>
             </div>
@@ -237,7 +242,7 @@ export default function ProductDetail({
               </span>
             </li>
           </ul>
-          <div className="mt-4 text-[11px] text-tertiary italic leading-normal">
+          <div className="mt-4 text-xs text-tertiary italic leading-normal">
             * Рассчитано на порцию 250г без учета соусов.
           </div>
         </div>

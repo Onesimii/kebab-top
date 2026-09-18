@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-24 - Accessible Grid Bento Cards
+**Learning:** Bento grid cards and promotional tiles often function as primary navigation triggers but are built with non-interactive `div` tags, making them invisible to keyboard users and screen readers. Assigning `role="button"`, `tabIndex={0}`, curried `onKeyDown` handlers (for Enter/Space), and visible `focus-visible` ring indicators turns visual marketing elements into fully accessible interactive controls without breaking layout structure.
+**Action:** Always audit interactive card and bento tile elements to ensure they include keyboard listeners, focus rings, and proper ARIA button semantics.

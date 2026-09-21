@@ -130,17 +130,20 @@ export default function ProductDetail({
                 <div className="flex items-center gap-3">
                   <button
                     onClick={handleDecrementSauce}
-                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
+                    disabled={extraSauceCount === 0}
+                    aria-label="Уменьшить количество соуса"
+                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
                     id="sauce-decrement"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="font-label-lg font-bold w-5 text-center text-sm">
+                  <span className="font-label-lg font-bold w-5 text-center text-sm" aria-live="polite">
                     {extraSauceCount}
                   </span>
                   <button
                     onClick={handleIncrementSauce}
-                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary transition-all cursor-pointer"
+                    aria-label="Увеличить количество соуса"
+                    className="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:bg-primary hover:text-on-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
                     id="sauce-increment"
                   >
                     <Plus className="w-4 h-4" />
@@ -155,9 +158,9 @@ export default function ProductDetail({
                     <span className="text-primary text-xs font-bold font-mono">Лук</span>
                   </div>
                   <div>
-                    <div className="font-label-lg text-sm text-on-surface font-bold">
+                    <label htmlFor="checkbox-onion" className="font-label-lg text-sm text-on-surface font-bold cursor-pointer">
                       Больше маринованного лука
-                    </div>
+                    </label>
                     <div className="text-xs text-on-surface-variant font-medium mt-0.5">
                       +30 ₽
                     </div>
@@ -170,8 +173,9 @@ export default function ProductDetail({
                     className="sr-only peer"
                     type="checkbox"
                     id="checkbox-onion"
+                    aria-label="Больше маринованного лука"
                   />
-                  <div className="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-secondary after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+                  <div className="w-11 h-6 bg-surface-container-high peer-focus-visible:ring-2 peer-focus-visible:ring-primary rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-secondary after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
                 </label>
               </div>
             </div>

@@ -68,31 +68,42 @@ export default function Footer() {
           <div className="flex flex-col items-center md:items-end justify-between h-full gap-6">
             <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center md:justify-end text-sm">
               <a href="#privacy" className="text-on-surface-variant hover:text-primary transition-colors">
-                Privacy Policy
+                Политика конфиденциальности
               </a>
               <a href="#terms" className="text-on-surface-variant hover:text-primary transition-colors">
-                Terms of Service
+                Условия использования
               </a>
               <a href="#careers" className="text-on-surface-variant hover:text-primary transition-colors">
-                Careers
+                Вакансии
               </a>
             </div>
 
             <div className="flex gap-4">
-              <button
-                onClick={shareApp}
-                className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
-                title="Поделиться"
-                id="btn-share"
-                aria-label={copied ? "Ссылка скопирована" : "Поделиться ссылкой"}
-                aria-live="polite"
-              >
-                {copied ? (
-                  <Check className="w-4 h-4 text-emerald-500 animate-in zoom-in duration-200" />
-                ) : (
-                  <Share2 className="w-4 h-4" />
+              <div className="relative">
+                {copied && (
+                  <div
+                    id="share-tooltip"
+                    role="status"
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 bg-surface-container-highest text-primary text-xs font-semibold rounded-md shadow-md whitespace-nowrap animate-fade-in pointer-events-none border border-outline-variant/30"
+                  >
+                    Ссылка скопирована!
+                  </div>
                 )}
-              </button>
+                <button
+                  onClick={shareApp}
+                  className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"
+                  title="Поделиться"
+                  id="btn-share"
+                  aria-label={copied ? "Ссылка скопирована" : "Поделиться ссылкой"}
+                  aria-live="polite"
+                >
+                  {copied ? (
+                    <Check className="w-4 h-4 text-emerald-500 animate-in zoom-in duration-200" />
+                  ) : (
+                    <Share2 className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
               <a
                 href="https://maps.google.com"
                 target="_blank"

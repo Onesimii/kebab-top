@@ -39,7 +39,7 @@ export default function Header({
         <nav className="hidden md:flex items-center gap-12">
           <button
             onClick={() => onNavigate("menu")}
-            className={`font-label-lg font-bold text-sm tracking-widest uppercase transition-colors cursor-pointer ${
+            className={`font-label-lg font-bold text-sm tracking-widest uppercase transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md px-2 py-1 ${
               currentScreen === "menu"
                 ? "text-primary border-b-2 border-primary pb-1"
                 : "text-on-surface-variant hover:text-primary"
@@ -57,7 +57,7 @@ export default function Header({
                 document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
               }, 100);
             }}
-            className="text-on-surface-variant font-bold text-sm tracking-widest uppercase hover:text-primary transition-colors font-label-lg"
+            className="text-on-surface-variant font-bold text-sm tracking-widest uppercase hover:text-primary transition-colors font-label-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md px-2 py-1"
           >
             Контакты
           </a>
@@ -70,7 +70,7 @@ export default function Header({
                 document.getElementById("categories-section")?.scrollIntoView({ behavior: "smooth" });
               }, 100);
             }}
-            className="text-on-surface-variant font-bold text-sm tracking-widest uppercase hover:text-primary transition-colors font-label-lg"
+            className="text-on-surface-variant font-bold text-sm tracking-widest uppercase hover:text-primary transition-colors font-label-lg focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md px-2 py-1"
           >
             О Нас
           </a>

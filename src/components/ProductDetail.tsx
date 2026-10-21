@@ -50,8 +50,9 @@ export default function ProductDetail({
       <div className="mb-8">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group cursor-pointer"
+          className="flex items-center gap-2 text-on-surface-variant hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md px-2 py-1 transition-colors group cursor-pointer"
           id="btn-back-menu"
+          aria-label="Назад в меню"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
           <span className="font-label-lg text-sm font-bold tracking-wider uppercase">
@@ -237,7 +238,7 @@ export default function ProductDetail({
               </span>
             </li>
           </ul>
-          <div className="mt-4 text-[11px] text-tertiary italic leading-normal">
+          <div className="mt-4 text-xs text-tertiary italic leading-normal">
             * Рассчитано на порцию 250г без учета соусов.
           </div>
         </div>

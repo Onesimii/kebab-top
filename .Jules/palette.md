@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-28 - Hero CTA Contrast Focus Rings
+**Learning:** High-contrast background images and gradient overlays can easily obscure default browser focus rings. Using explicit, high-contrast `focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2` styles ensures primary hero actions remain distinctly identifiable during keyboard navigation.
+**Action:** Always check interactive elements sitting on dark or visually saturated image overlays and apply explicit high-contrast focus rings with offset parameters.

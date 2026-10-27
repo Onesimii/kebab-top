@@ -39,14 +39,14 @@ export default function Hero({ onOrderNow, onExploreMenu }: HeroProps) {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
             onClick={onOrderNow}
-            className="w-full sm:w-auto bg-primary text-on-primary px-12 py-4 rounded-lg font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-95 cursor-pointer"
+            className="w-full sm:w-auto bg-primary text-on-primary px-12 py-4 rounded-lg font-display text-xs tracking-widest font-extrabold uppercase hover:glow-orange-sm transition-all active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             id="hero-order-now"
           >
             Заказать сейчас
           </button>
           <button
             onClick={onExploreMenu}
-            className="w-full sm:w-auto border-2 border-primary text-primary px-12 py-4 rounded-lg font-display text-xs tracking-widest font-extrabold uppercase hover:bg-primary/10 transition-all active:scale-95 cursor-pointer"
+            className="w-full sm:w-auto border-2 border-primary text-primary px-12 py-4 rounded-lg font-display text-xs tracking-widest font-extrabold uppercase hover:bg-primary/10 transition-all active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none"
             id="hero-explore-menu"
           >
             Наше меню

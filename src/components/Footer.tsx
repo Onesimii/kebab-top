@@ -38,7 +38,7 @@ export default function Footer() {
             <p className="text-on-surface-variant text-sm max-w-xs leading-relaxed">
               Аутентичный вкус уличного гриля. Свежевыпеченная пита, сочное мясо на углях и секретные специи.
             </p>
-            <span className="text-on-surface-variant/60 font-mono text-[11px] mt-2">
+            <span className="text-on-surface-variant/60 font-mono text-xs mt-2">
               © {new Date().getFullYear()} Flame &amp; Pita. All Rights Reserved.
             </span>
           </div>
@@ -67,18 +67,35 @@ export default function Footer() {
           {/* Social Interactions & Sharing */}
           <div className="flex flex-col items-center md:items-end justify-between h-full gap-6">
             <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center md:justify-end text-sm">
-              <a href="#privacy" className="text-on-surface-variant hover:text-primary transition-colors">
-                Privacy Policy
+              <a
+                href="#privacy"
+                className="text-on-surface-variant hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md transition-colors px-1 py-0.5"
+              >
+                Политика конфиденциальности
               </a>
-              <a href="#terms" className="text-on-surface-variant hover:text-primary transition-colors">
-                Terms of Service
+              <a
+                href="#terms"
+                className="text-on-surface-variant hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md transition-colors px-1 py-0.5"
+              >
+                Условия использования
               </a>
-              <a href="#careers" className="text-on-surface-variant hover:text-primary transition-colors">
-                Careers
+              <a
+                href="#careers"
+                className="text-on-surface-variant hover:text-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none rounded-md transition-colors px-1 py-0.5"
+              >
+                Вакансии
               </a>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 relative">
+              {copied && (
+                <div
+                  role="status"
+                  className="absolute -top-10 left-1/2 md:left-auto md:right-12 -translate-x-1/2 md:translate-x-0 bg-primary text-on-primary text-xs font-bold px-3 py-1 rounded-md shadow-md whitespace-nowrap animate-in fade-in zoom-in duration-200 pointer-events-none"
+                >
+                  Ссылка скопирована!
+                </div>
+              )}
               <button
                 onClick={shareApp}
                 className="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all cursor-pointer"

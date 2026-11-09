@@ -13,3 +13,7 @@
 ## 2026-07-10 - Newsletter UX & Accessible Feedback
 **Learning:** Newsletter forms often suffer from "silent failures" or disruptive alerts. Implementing a simulated loading state (e.g., 1s delay with a spinner) provides clear confirmation of the subscription intent, even when the underlying action is fast. Furthermore, increasing disclaimer text from 10px to 12px significantly improves legibility for older users and those with visual impairments.
 **Action:** Use simulated loading states for form submissions to provide visual "breathing room" for confirmation. Maintain a 12px minimum for legal or secondary text to ensure accessibility.
+
+## 2026-07-15 - Product Configurator Steppers & Toggles Accessibility
+**Learning:** Number counters/steppers (like extra sauce or quantity selectors) frequently lack disabled state indications when reaching minimum limits, and omit live regions so screen readers remain unaware of numeric updates. Additionally, custom toggle switches that conceal native checkboxes (`sr-only`) must replicate keyboard focus using `peer-focus-visible` styling and accessible labelling to prevent keyboard users from tabbing into 'invisible' elements.
+**Action:** Always disable decrement buttons at minimum count, associate `aria-live="polite"` with dynamic stepper values, and style visual toggle siblings with `peer-focus-visible:ring-2`.
